@@ -178,20 +178,21 @@ function programme() {
   document.querySelectorAll('[data-prog-day]').forEach(d => {
     gsap.fromTo(d, { clipPath: 'inset(-40% 50% -40% 50%)' }, { clipPath: 'inset(-40% -10% -40% -10%)', duration: 1.1, ease: 'power3.inOut', clearProps: 'clipPath', scrollTrigger: st(d, { start: 'top 85%' }) });
   });
-  rows.forEach(row => {
-    const path = row.querySelector('.prog-path');
-    gsap.set(path, { drawSVG: '0%' });
-    gsap.set(row.querySelector('.pr-node'), { scale: 0 });
-    gsap.set(row.querySelector('.pr-text'), { opacity: 0, x: 18 });
-    ScrollTrigger.create({
-      trigger: row, start: 'top 84%', once: true,
-      onEnter: () => {
-        gsap.to(row.querySelector('.pr-node'), { scale: 1, rotation: 90, duration: .6, ease: 'back.out(2.5)' });
-        gsap.to(path, { drawSVG: '100%', duration: 1.3, ease: 'power2.inOut', onComplete: () => row.classList.add('lit') });
-        gsap.to(row.querySelector('.pr-text'), { opacity: 1, x: 0, duration: .9, ease: 'silk', delay: .15 });
-      },
-    });
-  });
+  // Rows: icon slides in from the left, text from the right, arriving together.
+  // IntersectionObserver adds .is-visible; CSS keyframes do the motion.
+  // Rows that enter the screen together are staggered 0.1s apart.
+  const io = new IntersectionObserver(entries => {
+    entries.filter(e => e.isIntersecting)
+      .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+      .forEach((e, i) => {
+        const row = e.target;
+        row.style.setProperty('--delay', `${(i * 0.1).toFixed(1)}s`);
+        row.classList.add('is-visible');
+        row.querySelector('.slide-in-right').addEventListener('animationend', () => row.classList.add('lit'), { once: true });
+        io.unobserve(row);
+      });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.2 });
+  rows.forEach(row => io.observe(row));
 }
 
 // ── 10 · venue: map unfolds like paper, calendar file ───────────────

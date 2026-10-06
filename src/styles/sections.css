@@ -85,7 +85,19 @@ html[data-lang='en'] .pd-label { font-family: var(--en); font-weight: 600; lette
 html[data-lang='en'] .pd-label::after { content: ' ·'; }
 html[data-lang='en'] .pd-date { font-family: var(--en); font-style: italic; font-size: 17px; }
 
-.prog-list { --ic: clamp(44px, 12vw, 58px); --node: 18px; position: relative; padding: 4px 0; }
+.prog-list { --ic: clamp(44px, 12vw, 58px); --node: 18px; position: relative; padding: 4px 0; overflow-x: clip; }
+
+/* ── row slide-in (programme) ── */
+@keyframes slideInLeft  { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(50px); }  to { opacity: 1; transform: translateX(0); } }
+@keyframes popIn        { from { opacity: 0; transform: scale(0) rotate(-90deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+.slide-in-left, .slide-in-right, .pop-in { opacity: 0; will-change: transform, opacity; }
+.is-visible .slide-in-left  { animation: slideInLeft  .7s cubic-bezier(.25, 1, .5, 1) var(--delay, 0s) both; }
+.is-visible .slide-in-right { animation: slideInRight .7s cubic-bezier(.25, 1, .5, 1) var(--delay, 0s) both; }
+.is-visible .pop-in         { animation: popIn        .7s cubic-bezier(.25, 1, .5, 1) var(--delay, 0s) both; }
+@media (prefers-reduced-motion: reduce) {
+  .slide-in-left, .slide-in-right, .pop-in { opacity: 1; animation: none !important; transform: none; }
+}
 .pl-line { position: absolute; top: 0; bottom: 0; left: calc(var(--ic) + 12px + var(--node) / 2 - .75px); width: 1.5px; background: rgba(156, 113, 36, .2); }
 .pl-fill { position: absolute; inset: 0; background: linear-gradient(180deg, #b08431, #e3c57c 50%, #9c7124); transform-origin: top; transform: scaleY(0); }
 .prog-row { position: relative; display: grid; grid-template-columns: var(--ic) var(--node) 1fr; column-gap: 12px; align-items: center; padding: 7px 0; }

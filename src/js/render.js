@@ -152,9 +152,6 @@ export function render() {
         <div class="couple-person cp-groom" data-person>
           <p class="cp-label" data-i18n="groomLabel">${t('groomLabel')}</p>
           <h3 class="cp-name foil">${bi(W.groom)}</h3>
-          <p class="cp-of"><span data-i18n="sonOf">${t('sonOf')}</span></p>
-          <p class="cp-par"><span data-i18n="mr">${t('mr')}</span> ${bi(W.groomParents.father)}</p>
-          <p class="cp-par"><span data-i18n="andMrs">${t('andMrs')}</span> ${bi(W.groomParents.mother)}</p>
         </div>
         <figure class="scallop" data-scallop>
           <svg class="scallop-ring" viewBox="0 0 200 200" aria-hidden="true"><path id="scallopPath" class="kb-line" d=""/></svg>
@@ -164,9 +161,6 @@ export function render() {
         <div class="couple-person cp-bride" data-person>
           <p class="cp-label" data-i18n="brideLabel">${t('brideLabel')}</p>
           <h3 class="cp-name foil">${bi(W.bride)}</h3>
-          <p class="cp-of"><span data-i18n="daughterOf">${t('daughterOf')}</span></p>
-          <p class="cp-par"><span data-i18n="mr">${t('mr')}</span> ${bi(W.brideParents.father)}</p>
-          <p class="cp-par"><span data-i18n="andMrs">${t('andMrs')}</span> ${bi(W.brideParents.mother)}</p>
         </div>
       </div>
     </section>

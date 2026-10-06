@@ -25,8 +25,6 @@ export const i18n = {
     coupleHeading: 'កូនកំលោះ និង កូនក្រមុំ',
     groomLabel: 'កូនកំលោះ',
     brideLabel: 'កូនក្រមុំ',
-    sonOf: 'កូនប្រុសរបស់',
-    daughterOf: 'កូនស្រីរបស់',
 
     countHeading: 'រាប់ថយក្រោយ',
     countSub: 'ថ្ងៃមង្គលកំពុងខិតជិតមកដល់',
@@ -88,8 +86,6 @@ export const i18n = {
     coupleHeading: 'The Groom & The Bride',
     groomLabel: 'The Groom',
     brideLabel: 'The Bride',
-    sonOf: 'Son of',
-    daughterOf: 'Daughter of',
 
     countHeading: 'Counting down',
     countSub: 'Our wedding day draws near',

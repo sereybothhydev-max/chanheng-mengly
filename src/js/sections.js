@@ -133,8 +133,7 @@ function couple() {
     const tl = gsap.timeline({ scrollTrigger: st(p, { start: 'top 85%' }) });
     tl.from(p.querySelector('.cp-label'), { opacity: 0, y: 10, duration: .7 })
       .fromTo(p.querySelector('.cp-name'), { clipPath: i ? 'inset(-40% -10% -40% 110%)' : 'inset(-40% 110% -40% -10%)' },
-        { clipPath: 'inset(-40% -10% -40% -10%)', duration: 1.2, ease: 'power3.inOut', clearProps: 'clipPath' }, .1)
-      .from(p.querySelectorAll('.cp-of, .cp-par'), { opacity: 0, y: 12, stagger: .1, duration: .8, ease: 'silk' }, .6);
+        { clipPath: 'inset(-40% -10% -40% -10%)', duration: 1.2, ease: 'power3.inOut', clearProps: 'clipPath' }, .1);
   });
 }
 

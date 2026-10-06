@@ -40,7 +40,6 @@ export function initSections() {
   venue();
   gift();
   thanks();
-  share();
   if (env.gl) initCoverFX(document.getElementById('coverGL'));
 
   onLang(() => { splitWords(); ScrollTrigger.refresh(); });
@@ -266,7 +265,6 @@ function thanks() {
     },
   });
   gsap.from('.thanks-title', { opacity: 0, scale: .92, duration: 1.6, ease: 'silk', scrollTrigger: st('.thanks-title') });
-  gsap.from('.share-btn', { opacity: 0, y: 18, stagger: .08, duration: .9, ease: 'silk', scrollTrigger: st('.share') });
   ScrollTrigger.create({ trigger: logo, start: 'top 90%', once: true, onEnter: () => tl.play() });
 }
 

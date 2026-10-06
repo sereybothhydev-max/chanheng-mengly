@@ -203,7 +203,7 @@ html.lite .lake-streaks { animation: none; }
 .gift-bank { font-size: 13px; opacity: .7; letter-spacing: .08em; font-family: var(--en); }
 
 /* ── 12 · thank you ────────────────────────────────────────────── */
-.s-thanks { overflow: hidden; text-align: center; padding-bottom: 32px !important; }
+.s-thanks { overflow: hidden; text-align: center; padding-bottom: calc(72px + env(safe-area-inset-bottom)) !important; }
 .thanks-bg { position: absolute; inset: 0; }
 .thanks-bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.32) saturate(.7); }
 .thanks-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, var(--ink), rgba(18, 20, 11, .55) 30%, rgba(18, 20, 11, .75) 75%, var(--ink)); }

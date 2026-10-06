@@ -287,15 +287,8 @@ export function render() {
         <div class="candles" id="candles">${[0, 1, 2, 3, 4].map(candleSVG).join('')}</div>
         <h2 class="thanks-title foil shimmer" data-i18n="thanksHeading">${t('thanksHeading')}</h2>
         <p class="thanks-body" data-i18n="thanksBody">${t('thanksBody')}</p>
-        <div class="share">
-          <a class="share-btn" data-share="telegram" href="#" target="_blank" rel="noopener">${SHARE_ICONS.telegram}<span data-i18n="shareTelegram">${t('shareTelegram')}</span></a>
-          <a class="share-btn" data-share="messenger" href="#" target="_blank" rel="noopener">${SHARE_ICONS.messenger}<span data-i18n="shareMessenger">${t('shareMessenger')}</span></a>
-          <a class="share-btn" data-share="facebook" href="#" target="_blank" rel="noopener">${SHARE_ICONS.facebook}<span data-i18n="shareFacebook">${t('shareFacebook')}</span></a>
-          <button class="share-btn" data-share="copy" type="button">${SHARE_ICONS.copy}<span data-i18n="shareCopy">${t('shareCopy')}</span></button>
-        </div>
         <div class="thanks-logo">${nameLogo({ crest: true, cls: 'nl-thanks' })}</div>
       </div>
-      <footer class="credit"><a href="${W.credit.url}" target="_blank" rel="noopener">${W.credit.text}</a></footer>
     </section>
   </main>
 

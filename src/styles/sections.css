@@ -172,9 +172,24 @@ html.lite .lake-streaks { animation: none; }
 .venue-crest-svg { width: 100%; height: auto; display: block; }
 .venue-name { font-size: clamp(24px, 7vw, 40px); display: inline-block; }
 .venue-date { opacity: .8; margin-bottom: clamp(20px, 4vw, 32px); }
-.map-frame { max-width: 900px; margin: 0 auto clamp(20px, 4vw, 28px); aspect-ratio: 4 / 3.2; border-radius: 16px; overflow: hidden; padding: 6px; background: linear-gradient(135deg, #b98f3e, #f3dc9c 45%, #9c7124); box-shadow: 0 24px 50px -28px rgba(42, 47, 22, .7); transform-origin: 50% 0; }
+.map-frame { position: relative; max-width: 900px; margin: 0 auto clamp(20px, 4vw, 28px); aspect-ratio: 4 / 3.2; border-radius: 16px; overflow: hidden; padding: 6px; background: linear-gradient(135deg, #b98f3e, #f3dc9c 45%, #9c7124); box-shadow: 0 24px 50px -28px rgba(42, 47, 22, .7); transform-origin: 50% 0; }
 @media (min-width: 900px) { .map-frame { aspect-ratio: 16 / 8; } }
 .map-frame iframe { width: 100%; height: 100%; border: 0; border-radius: 11px; display: block; background: #e8e2cc; }
+/* drawn map, shown wherever the Google embed is blocked */
+.map-fallback { display: none; position: absolute; inset: 6px; border-radius: 11px; overflow: hidden; text-decoration: none; color: var(--deep); }
+.map-frame.no-embed iframe { display: none; }
+.map-frame.no-embed .map-fallback { display: block; }
+.mf-art { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mf-pulse { transform-box: fill-box; transform-origin: center; animation: mfPulse 2.6s ease-out infinite; }
+@keyframes mfPulse { 0% { transform: scale(.4); opacity: .5; } 100% { transform: scale(1.3); opacity: 0; } }
+.mf-pin { position: absolute; left: 50%; top: 50%; width: 40px; margin: -51px 0 0 -20px; filter: drop-shadow(0 6px 6px rgba(42, 47, 22, .35)); animation: mfDrop 2.6s ease-in-out infinite; }
+.mf-pin svg { display: block; width: 100%; height: auto; }
+@keyframes mfDrop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.mf-card { position: absolute; left: 50%; bottom: 8%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0; padding: 8px 22px 10px; border-radius: 14px; white-space: nowrap;
+  background: rgba(255, 250, 235, .94); box-shadow: 0 10px 28px -12px rgba(42, 47, 22, .5), 0 0 0 1px rgba(185, 143, 62, .45); }
+.mf-name { font-family: var(--kh-head); font-size: clamp(15px, 3.8vw, 20px); line-height: 1.9; color: #6f4d14; }
+.mf-cta { font-size: 13px; line-height: 1.5; color: var(--deep); opacity: .8; }
+@media (hover: hover) { .map-fallback:hover .mf-card { box-shadow: 0 14px 32px -12px rgba(42, 47, 22, .6), 0 0 0 1px rgba(185, 143, 62, .8); } }
 
 /* ── 11 · gift ─────────────────────────────────────────────────── */
 .s-gift { text-align: center; }

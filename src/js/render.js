@@ -242,6 +242,23 @@ export function render() {
       <p class="venue-date">${bi({ kh: W.date.solarKh, en: W.date.solarEn })}</p>
       <div class="map-frame" data-unfold>
         <iframe title="Google Map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-src="https://maps.google.com/maps?q=${mapQ}&z=16&output=embed"></iframe>
+        <a class="map-fallback" href="${W.venue.mapUrl}" target="_blank" rel="noopener" aria-label="Google Maps">
+          <svg class="mf-art" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="800" height="500" fill="#ece4cc"/>
+            <g fill="#dfd5b6"><rect x="40" y="40" width="190" height="120" rx="8"/><rect x="260" y="30" width="150" height="150" rx="8"/><rect x="560" y="40" width="210" height="110" rx="8"/><rect x="40" y="330" width="230" height="130" rx="8"/><rect x="600" y="300" width="170" height="170" rx="8"/><rect x="300" y="350" width="130" height="110" rx="8"/></g>
+            <g fill="#cfd7a8" opacity=".85"><path d="M440 30h90v120h-90z"/><circle cx="160" cy="250" r="44"/><path d="M470 330c40-10 90 0 110 30v100H450z"/></g>
+            <path d="M-20 300C120 270 220 330 360 300S600 220 820 250" fill="none" stroke="#b9cdd0" stroke-width="26" stroke-linecap="round" opacity=".8"/>
+            <g fill="none" stroke="#fffaf0" stroke-linecap="round"><path d="M0 200H800" stroke-width="16"/><path d="M245 0V500" stroke-width="14"/><path d="M545 0V500" stroke-width="12"/><path d="M0 395C200 380 420 410 800 380" stroke-width="10"/><path d="M430 0L330 500" stroke-width="7"/></g>
+            <g fill="none" stroke="#d6c9a2" stroke-dasharray="2 10" stroke-linecap="round" stroke-width="2"><path d="M0 200H800"/><path d="M245 0V500"/></g>
+            <circle cx="400" cy="250" r="70" fill="#d9b15a" opacity=".18" class="mf-pulse"/>
+            <circle cx="400" cy="250" r="38" fill="#d9b15a" opacity=".22"/>
+          </svg>
+          <span class="mf-pin"><svg viewBox="0 0 40 52" aria-hidden="true"><path d="M20 51C20 51 3 31 3 19A17 17 0 0 1 37 19C37 31 20 51 20 51Z" fill="url(#g-foil)" stroke="#7a5517" stroke-width="1.2"/><circle cx="20" cy="19" r="6.5" fill="#2a2f16"/></svg></span>
+          <span class="mf-card">
+            <span class="mf-name">${venueName}</span>
+            <span class="mf-cta"><span data-i18n="openMaps">${t('openMaps')}</span> ↗</span>
+          </span>
+        </a>
       </div>
       <div class="btn-row">
         <a class="btn btn-gold" href="${W.venue.mapUrl}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="9.5" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span data-i18n="openMaps">${t('openMaps')}</span></a>

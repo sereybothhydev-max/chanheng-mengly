@@ -211,6 +211,12 @@ function story() {
 function venue() {
   const frame = document.querySelector('[data-unfold]');
   const iframe = frame.querySelector('iframe');
+  // Where the Google embed is blocked (strict CSP, offline), show the drawn map instead.
+  const noEmbed = () => frame.classList.add('no-embed');
+  document.addEventListener('securitypolicyviolation', e => {
+    if (/frame|child/.test(e.violatedDirective || e.effectiveDirective || '') || /google/.test(e.blockedURI || '')) noEmbed();
+  });
+  if (!navigator.onLine) noEmbed();
   ScrollTrigger.create({ trigger: frame, start: 'top bottom+=600', once: true, onEnter: () => (iframe.src = iframe.dataset.src) });
   if (!R) {
     gsap.timeline({ scrollTrigger: st('.venue-crest', { start: 'top 85%' }) })

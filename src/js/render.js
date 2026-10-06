@@ -53,14 +53,6 @@ const ICONS = {
 };
 const icon = k => `<svg class="prog-icon" viewBox="4 4 40 40" aria-hidden="true"><path class="prog-path" d="${ICONS[k] || ICONS.blessing}"/></svg>`;
 
-const STORY = [
-  { id: '03-walk-away', key: 'story1' },
-  { id: '05-dip', key: 'story2' },
-  { id: '10-sunglasses', key: 'story3' },
-  { id: '09-angkor-embrace', key: 'story4' },
-  { id: '06-veil-canopy', key: 'story5' },
-];
-
 const SHARE_ICONS = {
   telegram: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#29a9eb"/><path fill="#fff" d="M5.4 11.7l11.2-4.3c.5-.2 1 .1.8.9l-1.9 9c-.1.6-.5.8-1 .5l-2.9-2.1-1.4 1.3c-.2.2-.3.3-.6.3l.2-2.9 5.3-4.8c.2-.2 0-.3-.3-.1l-6.6 4.1-2.8-.9c-.6-.2-.6-.6.1-.9z"/></svg>',
   messenger: '<svg viewBox="0 0 24 24" aria-hidden="true"><defs><radialGradient id="msg-g" cx=".2" cy="1" r="1.2"><stop offset="0" stop-color="#0099ff"/><stop offset=".6" stop-color="#a033ff"/><stop offset=".9" stop-color="#ff5280"/><stop offset="1" stop-color="#ff7061"/></radialGradient></defs><path fill="url(#msg-g)" d="M12 1.5C6.1 1.5 1.5 5.8 1.5 11.6c0 3 1.2 5.6 3.3 7.4v3.5l3.2-1.8c1.2.3 2.5.5 4 .5 5.9 0 10.5-4.3 10.5-10.1S17.9 1.5 12 1.5z"/><path fill="#fff" d="M5.7 14.6l3.1-4.9c.5-.8 1.5-1 2.3-.4l2.4 1.8c.2.2.5.2.7 0l3.3-2.5c.4-.3 1 .2.7.6l-3.1 4.9c-.5.8-1.5 1-2.3.4l-2.4-1.8c-.2-.2-.5-.2-.7 0l-3.3 2.5c-.4.3-1-.2-.7-.6z"/></svg>',
@@ -215,21 +207,6 @@ export function render() {
             </div>`;
             }).join('')}
           </div>`).join('')}
-      </div>
-    </section>
-
-    <!-- 7 · LOVE STORY -->
-    <section class="s-story" id="story">
-      <div class="story-sky" aria-hidden="true"><div class="story-sun"></div></div>
-      <div class="story-pin">
-        <header class="sec-head story-head">${divider('sec-divider')}<h2 class="sec-title foil" data-i18n="storyHeading">${t('storyHeading')}</h2></header>
-        <div class="story-track" id="storyTrack">
-          ${STORY.map((s, i) => `
-            <figure class="story-card" style="--r:${[-2.5, 1.8, -1.2, 2.2, -1.6][i]}deg">
-              <div class="story-photo">${img(s.id, { sizes: '(min-width: 900px) 360px, 68vw' })}</div>
-              <figcaption><span class="story-no" data-num="${i + 1}">${num(i + 1)}</span><span data-i18n="${s.key}">${t(s.key)}</span></figcaption>
-            </figure>`).join('')}
-        </div>
       </div>
     </section>
 

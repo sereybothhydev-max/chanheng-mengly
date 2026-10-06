@@ -6,7 +6,7 @@ import fs from 'node:fs';
 const base = process.argv[2] || 'http://127.0.0.1:5173/';
 const out = process.argv[3] || 'qa/sections';
 const VIEWPORTS = [[320, 568], [390, 844], [740, 360], [1280, 800]];
-const SECTIONS = ['cover', 'invite', 'couple', 'count', 'programme', 'story', 'candle', 'gallery', 'venue', 'gift', 'thanks'];
+const SECTIONS = ['cover', 'invite', 'couple', 'count', 'programme', 'candle', 'gallery', 'venue', 'gift', 'thanks'];
 const lang = process.env.LANG_MODE || 'kh';
 
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--use-gl=swiftshader', '--enable-webgl', '--ignore-gpu-blocklist'] });
@@ -30,7 +30,7 @@ for (const [w, h] of VIEWPORTS) {
     await page.evaluate(id => {
       const el = document.getElementById(id);
       const y = el.getBoundingClientRect().top + scrollY;
-      window.scrollTo(0, y + (id === 'story' ? 2 : 0));
+      window.scrollTo(0, y);
     }, id);
     // slow scroll a bit past so scroll-triggered reveals fire
     await page.waitForTimeout(400);
@@ -38,11 +38,6 @@ for (const [w, h] of VIEWPORTS) {
     await page.waitForTimeout(2600);
     if (id === 'candle') { await page.mouse.click(w * .4, h * .8); await page.mouse.click(w * .7, h * .75); await page.waitForTimeout(1400); }
     await page.screenshot({ path: `${dir}/${id}.png` });
-    if (id === 'story') {
-      await page.evaluate(() => window.scrollBy(0, innerHeight * 1.4));
-      await page.waitForTimeout(1800);
-      await page.screenshot({ path: `${dir}/story-dusk.png` });
-    }
     const sh = await page.evaluate(id => document.getElementById(id).offsetHeight, id);
     if (sh > h * 1.15) {
       // tall sections: one more shot further down
@@ -61,7 +56,7 @@ for (const [w, h] of VIEWPORTS) {
     const vw = document.documentElement.clientWidth;
     const wide = [];
     document.querySelectorAll('body *').forEach(el => {
-      if (el.closest('.viewer, .marquee, .story-track, .lake-refl, .lake-sky, .env-bg, .s-envelope, .svg-defs')) return;
+      if (el.closest('.viewer, .marquee, .lake-refl, .lake-sky, .env-bg, .s-envelope, .svg-defs')) return;
       const r = el.getBoundingClientRect();
       if (r.width && (r.right > vw + 1 || r.left < -1)) {
         const cs = getComputedStyle(el);

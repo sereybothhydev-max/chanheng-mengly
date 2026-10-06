@@ -38,12 +38,6 @@ export const i18n = {
     progHeading2: 'មង្គលអាពាហ៍ពិពាហ៍',
     progTime: 'ម៉ោង',
 
-    storyHeading: 'ដំណើររឿងស្នេហ៍',
-    story1: 'ពីថ្ងៃដែលភ្នែកជួបភ្នែក',
-    story2: 'ដើរជាមួយគ្នា មួយជំហានម្តងៗ',
-    story3: 'សំណើចដែលពោរពេញដោយក្តីស្រលាញ់',
-    story4: 'ក្រោមមេឃនៃប្រាសាទបុរាណ',
-    story5: 'ហើយនៅទីនេះ ជារៀងរហូត',
 
     candleHeading: 'បណ្តែតប្រទីបជូនពរ',
     candleHint: 'ប៉ះលើផ្ទៃទឹក ដើម្បីបណ្តែតប្រទីប',
@@ -107,12 +101,6 @@ export const i18n = {
     progHeading2: 'of the Wedding Ceremony',
     progTime: '',
 
-    storyHeading: 'Our Story',
-    story1: 'From the day our eyes first met',
-    story2: 'Walking together, one step at a time',
-    story3: 'Laughter, full of love',
-    story4: 'Beneath ancient temple skies',
-    story5: 'And here, forever',
 
     candleHeading: 'Float a lantern of blessing',
     candleHint: 'Touch the water to float a lantern',

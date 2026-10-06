@@ -35,7 +35,6 @@ export function initSections() {
   couple();
   countdown();
   programme();
-  story();
   initLake(env);
   initGallery(() => lenis);
   venue();
@@ -193,25 +192,6 @@ function programme() {
         gsap.to(row.querySelector('.pr-text'), { opacity: 1, x: 0, duration: .9, ease: 'silk', delay: .15 });
       },
     });
-  });
-}
-
-// ── 7 · love story: pinned sideways strip, day → dusk ───────────────
-function story() {
-  const sec = document.getElementById('story');
-  const track = document.getElementById('storyTrack');
-  if (R) { sec.classList.add('no-pin'); return; }
-  const dist = () => Math.max(0, track.scrollWidth - innerWidth);
-  gsap.to(track, {
-    x: () => -dist(), ease: 'none',
-    scrollTrigger: {
-      trigger: sec, start: 'top top', end: () => '+=' + dist() * 1.15, pin: true, scrub: env.phone ? .4 : 1,
-      invalidateOnRefresh: true, anticipatePin: 1,
-      onUpdate: s => sec.style.setProperty('--dusk', s.progress.toFixed(3)),
-    },
-  });
-  gsap.utils.toArray('.story-card').forEach((c, i) => {
-    gsap.from(c.querySelector('img'), { scale: 1.18, duration: 1.6, ease: 'silk', scrollTrigger: { trigger: sec, start: 'top 60%', once: true }, delay: i * .08 });
   });
 }
 

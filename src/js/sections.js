@@ -8,6 +8,7 @@ import { logoTimeline, showLogoInstant } from './logo.js';
 import { initLake } from './lake.js';
 import { initGallery } from './gallery.js';
 import { initCoverFX } from './coverfx.js';
+import { initFireworks } from './fireworks.js';
 
 export let lenis = null;
 
@@ -248,23 +249,14 @@ function gift() {
   gsap.from('[data-gift]', { rotationY: -75, opacity: 0, transformOrigin: '0% 50%', duration: 1.6, stagger: .2, ease: 'silk', scrollTrigger: st('.gift-grid', { start: 'top 85%' }) });
 }
 
-// ── 12 · candles light one by one ───────────────────────────────────
+// ── 12 · thank you: fireworks ─────────────────────────────────────────────────────────────────────────
 function thanks() {
-  const candles = gsap.utils.toArray('.candle');
+  initFireworks(document.getElementById('fireworks'), env);
   const logo = document.querySelector('.nl-thanks');
   const tl = logoTimeline(logo);
-  if (R) { candles.forEach(c => c.classList.add('lit')); showLogoInstant(logo); return; }
-  ScrollTrigger.create({
-    trigger: '#candles', start: 'top 80%', once: true,
-    onEnter: () => {
-      const order = [2, 1, 3, 0, 4];
-      order.forEach((i, k) => setTimeout(() => {
-        candles[i].classList.add('lit');
-        gsap.from(candles[i].querySelectorAll('.c-flame, .c-flame-in'), { scale: 0, duration: .6, ease: 'back.out(3)' });
-      }, 350 + k * 420));
-    },
-  });
-  gsap.from('.thanks-title', { opacity: 0, scale: .92, duration: 1.6, ease: 'silk', scrollTrigger: st('.thanks-title') });
+  if (R) { showLogoInstant(logo); return; }
+  gsap.from('.thanks-title', { opacity: 0, scale: .85, duration: 1.4, ease: 'back.out(1.6)', scrollTrigger: st('.thanks-title') });
+  gsap.from('.thanks-body', { opacity: 0, y: 16, duration: 1.1, ease: 'silk', delay: .3, scrollTrigger: st('.thanks-title') });
   ScrollTrigger.create({ trigger: logo, start: 'top 90%', once: true, onEnter: () => tl.play() });
 }
 

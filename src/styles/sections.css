@@ -207,7 +207,10 @@ html.lite .lake-streaks { animation: none; }
 .thanks-bg { position: absolute; inset: 0; }
 .thanks-bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.32) saturate(.7); }
 .thanks-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, var(--ink), rgba(18, 20, 11, .55) 30%, rgba(18, 20, 11, .75) 75%, var(--ink)); }
-.thanks-inner { position: relative; max-width: 720px; margin: 0 auto; }
+.thanks-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; pointer-events: none; }
+.thanks-inner a, .thanks-inner button { pointer-events: auto; }
+.fireworks { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; touch-action: manipulation; }
+.fw-space { height: clamp(150px, 30svh, 300px); }
 .candles { display: flex; justify-content: center; align-items: flex-end; gap: clamp(6px, 3vw, 22px); margin-bottom: 8px; }
 .candle { width: clamp(26px, 7vw, 44px); height: auto; overflow: visible; }
 .candle:nth-child(2), .candle:nth-child(4) { width: clamp(22px, 6vw, 38px); }

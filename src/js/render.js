@@ -283,8 +283,9 @@ export function render() {
     <!-- 12 · THANK YOU -->
     <section class="s-thanks dark" id="thanks">
       <div class="thanks-bg">${img('07-veil-blur', { sizes: '100vw' })}</div>
+      <canvas class="fireworks" id="fireworks" aria-hidden="true"></canvas>
       <div class="thanks-inner">
-        <div class="candles" id="candles">${[0, 1, 2, 3, 4].map(candleSVG).join('')}</div>
+        <div class="fw-space" aria-hidden="true"></div>
         <h2 class="thanks-title foil shimmer" data-i18n="thanksHeading">${t('thanksHeading')}</h2>
         <p class="thanks-body" data-i18n="thanksBody">${t('thanksBody')}</p>
         <div class="thanks-logo">${nameLogo({ crest: true, cls: 'nl-thanks' })}</div>

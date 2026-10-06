@@ -33,7 +33,7 @@ export const wedding = {
   // Start of the day (first programme item), Cambodia time.
   dateISO: '2026-12-20T06:30:00+07:00',
   // For the .ics "Save to calendar" event
-  calendar: { start: '2026-12-20T06:30:00+07:00', end: '2026-12-20T21:00:00+07:00' },
+  calendar: { start: '2026-12-19T15:30:00+07:00', end: '2026-12-20T21:00:00+07:00' },
 
   date: {
     lunarKh: 'ថ្ងៃអាទិត្យ ១១កើត ខែមិគសិរ ឆ្នាំមមី អដ្ឋស័ក ពុទ្ធសករាជ២៥៧០',
@@ -48,9 +48,32 @@ export const wedding = {
     },
   },
 
-  // Ceremony programme. icon: procession | hair | blessing | knot | rings | reception | monk | photo
+  // Ceremony programme, grouped by day. Times exactly as on the printed card.
+  // icon: shrine | monk | lantern | guests | procession | urn | rings | hair | knot | dining | toast
   programme: [
-    { time: '06:30', icon: 'procession', kh: 'ហែជំនូន', en: 'Gift procession' },
+    {
+      day: { kh: 'ថ្ងៃទី១', en: 'Day 1' },
+      date: { kh: 'ថ្ងៃសៅរ៍ ទី១៩ ខែធ្នូ ឆ្នាំ២០២៦', en: 'Saturday, 19 December 2026' },
+      items: [
+        { time: '03:30', periodKh: 'រសៀល', timeEn: '3:30 PM', icon: 'shrine', kh: 'ពិធីសែនក្រុងពាលី', en: 'Krong Pali Ceremony — paying respects to the land spirits' },
+        { time: '04:30', periodKh: 'រសៀល', timeEn: '4:30 PM', icon: 'monk', kh: 'ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត', en: 'Blessing ceremony — monks chanting' },
+        { time: '06:30', periodKh: 'ល្ងាច', timeEn: '6:30 PM', icon: 'lantern', kh: 'ពិធីជើងពានស្ទា', en: 'Evening offering ceremony' },
+      ],
+    },
+    {
+      day: { kh: 'ថ្ងៃទី២', en: 'Day 2' },
+      date: { kh: 'ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦', en: 'Sunday, 20 December 2026' },
+      items: [
+        { time: '06:30', periodKh: 'ព្រឹក', timeEn: '6:30 AM', icon: 'guests', kh: 'ជួបជុំភ្ញៀវកិត្តិយសរៀបចំពិធីហែជំនូន', en: 'Honoured guests gather to prepare the groom’s procession' },
+        { time: '07:00', periodKh: 'ព្រឹក', timeEn: '7:00 AM', icon: 'procession', kh: 'ពិធីហែជំនូន (កំណត់) ចូលរោងជ័យ', en: 'Groom’s procession (Hai Chenoun) enters the wedding hall' },
+        { time: '08:30', periodKh: 'ព្រឹក', timeEn: '8:30 AM', icon: 'urn', kh: 'ពិធីរៀបរាប់ផ្លែឈើ និងពិសារស្លាដក', en: 'Fruit presentation & traditional Sla Dok tasting' },
+        { time: '09:00', periodKh: 'ព្រឹក', timeEn: '9:00 AM', icon: 'rings', kh: 'ពិធីបំពាក់ចិញ្ចៀន កូនប្រុស - កូនស្រី', en: 'Ring exchange of the groom & bride' },
+        { time: '09:30', periodKh: 'ព្រឹក', timeEn: '9:30 AM', icon: 'hair', kh: 'ពិធីកាត់សក់បង្កក់សិរី កូនប្រុស - កូនស្រី', en: 'Hair-cutting ceremony (Gaat Sah) for the groom & bride' },
+        { time: '11:00', periodKh: 'ព្រឹក', timeEn: '11:00 AM', icon: 'knot', kh: 'ពិធីសំពះផ្ទឹម បង្វិលពពិល និងចងដៃ', en: 'Sampeah Phtim, passing of the sacred candle (Bangvel Popil) & wrist-tying' },
+        { time: '12:00', periodKh: 'ថ្ងៃត្រង់', timeEn: '12:00 PM', icon: 'dining', kh: 'អញ្ជើញភ្ញៀវកិត្តិយសពិសារអាហារថ្ងៃត្រង់', en: 'Honoured guests are invited to lunch' },
+        { time: '05:30', periodKh: 'ល្ងាច', timeEn: '5:30 PM', icon: 'toast', kh: 'អញ្ជើញភ្ញៀវកិត្តិយសពិសារអាហារពេលល្ងាច សូមអរគុណ!', en: 'Evening reception & dinner for honoured guests — thank you!' },
+      ],
+    },
   ],
 
   venue: {

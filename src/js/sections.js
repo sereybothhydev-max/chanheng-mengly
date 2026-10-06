@@ -174,6 +174,9 @@ function programme() {
   const fill = document.querySelector('.prog-thread-fill');
   if (R) { gsap.set(fill, { scaleY: 1 }); document.querySelectorAll('[data-prog]').forEach(i => i.classList.add('lit')); return; }
   gsap.to(fill, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: '.prog', start: 'top 70%', end: 'bottom 60%', scrub: .6 } });
+  document.querySelectorAll('[data-prog-day]').forEach(d => {
+    gsap.from(d, { scale: .6, opacity: 0, duration: 1, ease: 'back.out(1.8)', scrollTrigger: st(d, { start: 'top 80%' }) });
+  });
   document.querySelectorAll('[data-prog]').forEach(item => {
     const paths = item.querySelectorAll('.prog-path, .prog-ring');
     gsap.set(paths, { drawSVG: '0%' });

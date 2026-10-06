@@ -1,6 +1,6 @@
 import { wedding as W } from '../data/wedding.js';
 import gallery from '../data/gallery.json';
-import { t, tx, bi, num, pick } from './i18n.js';
+import { t, tx, bi, num, pick, toKhDigits, getLang } from './i18n.js';
 import { envelopeHTML } from './envelope.js';
 import { nameLogo } from './logo.js';
 import { crest, corners, divider, lotus } from './elements.js';
@@ -27,14 +27,29 @@ const sectionHead = (key, { light = false } = {}) => `
 
 // ── programme line icons (stroke-drawn) ─────────────────────────────
 const ICONS = {
-  procession: 'M8 32h32M10 32c3 7 25 7 28 0M14 32c0-9 5-15 10-15s10 6 10 15M24 17v-5M19 12h10M17 24h14',
-  hair: 'M14 12a5 5 0 1 0 0 10a5 5 0 1 0 0-10zM14 26a5 5 0 1 0 0 10a5 5 0 1 0 0-10zM18 20l22 14M18 28l22-14',
+  // spirit-house shrine (Krong Pali)
+  shrine: 'M10 22L24 11l14 11M8 20c1 2 2 2.5 4 2M40 20c-1 2-2 2.5-4 2M14 22v14M34 22v14M10 36h28M19 36v-8h10v8M24 11V7M22 31h4',
+  // monk seated in meditation
+  monk: 'M24 10.5a4 4 0 1 0 0 8a4 4 0 1 0 0-8zM16 35c0-9 3.5-14 8-14s8 5 8 14M20 23l9 11M11 37c4-2 9-2.5 13-2.5s9 .5 13 2.5',
+  // hanging lantern with flame
+  lantern: 'M24 6v5M19 11h10M18 13c-3.5 5-3.5 16 0 21h12c3.5-5 3.5-16 0-21zM18 34h12M21 38h6M24 34v4M24 19c2.2 2.6 2.2 5.4 0 7c-2.2-1.6-2.2-4.4 0-7z',
+  // gathering of guests
+  guests: 'M17 15a4 4 0 1 0 0 8a4 4 0 1 0 0-8zM31 15a4 4 0 1 0 0 8a4 4 0 1 0 0-8zM9 35c0-6 3.5-9.5 8-9.5s8 3.5 8 9.5M23 35c0-6 3.5-9.5 8-9.5s8 3.5 8 9.5M24 10.5a2.5 2.5 0 1 0 0 5a2.5 2.5 0 1 0 0-5z',
+  // stacked offering tray (chenoun)
+  procession: 'M9 33h30M11 33c3 6 23 6 26 0M15 33c0-8 4-13 9-13s9 5 9 13M18 20c0-4 3-7 6-7s6 3 6 7M24 13V9M21 9h6M17 27h14',
+  // brass urn / covered bowl (sla dok)
+  urn: 'M15 25h18M16 25c0 7 3.5 11 8 11s8-4 8-11M17 25c1-6 4-9 7-9s6 3 7 9M24 16v-3M21.5 13h5M20 36h8l2 3H18z',
+  // wedding rings with a heart
+  rings: 'M19 20a8.5 8.5 0 1 0 0 17a8.5 8.5 0 1 0 0-17zM29 20a8.5 8.5 0 1 0 0 17a8.5 8.5 0 1 0 0-17zM24 15.5l-3.6-3.4c-1.6-1.6-.6-4.2 1.6-4.2c1 0 1.6.5 2 1.2c.4-.7 1-1.2 2-1.2c2.2 0 3.2 2.6 1.6 4.2z',
+  // scissors and comb (hair cutting)
+  hair: 'M14 11a4.5 4.5 0 1 0 0 9a4.5 4.5 0 1 0 0-9zM14 24a4.5 4.5 0 1 0 0 9a4.5 4.5 0 1 0 0-9zM18 18l16 9M18 26l16-9M10 39h28M12 39v-3M16 39v-3M20 39v-3M24 39v-3M28 39v-3M32 39v-3M36 39v-3',
+  // hands joined in sampeah, blessing thread tied at the wrists
+  knot: 'M17 38V25c0-6 3.5-11.5 7-14c3.5 2.5 7 8 7 14v13M24 11v21M14.5 30c4 2.2 15 2.2 19 0M14.5 30c-1.8 1-2.5 3-1.6 4.5M33.5 30c1.8 1 2.5 3 1.6 4.5',
+  // plate with fork and knife
+  dining: 'M24 16a9 9 0 1 0 0 18a9 9 0 1 0 0-18zM24 20a5 5 0 1 0 0 10a5 5 0 1 0 0-10zM10 12v6a2 2 0 0 0 4 0v-6M12 12v26M37 12c-3 3-3 10 0 12v14',
+  // two glasses clinking
+  toast: 'M13 14h8l-.8 9a3.2 3.2 0 0 1-6.4 0zM17 26v10M13.5 36h7M27 14h8l-.8 9a3.2 3.2 0 0 1-6.4 0zM31 26v10M27.5 36h7M24 9V6M20 10l-1.5-2.5M28 10l1.5-2.5',
   blessing: 'M24 10c5 7 5 17 0 24c-5-7-5-17 0-24zM24 34c-8-3-13-10-12-19c6 3 10 9 12 19zM24 34c8-3 13-10 12-19c-6 3-10 9-12 19zM12 40h24',
-  knot: 'M8 24c6-8 12-8 16 0s10 8 16 0M8 24c6 8 12 8 16 0s10-8 16 0M24 24v14M20 38h8',
-  rings: 'M19 20a9 9 0 1 0 0 18a9 9 0 1 0 0-18zM29 16a9 9 0 1 0 0 18a9 9 0 1 0 0-18zM26 9l3 4 3-4',
-  reception: 'M14 10h8l-1 10a3 3 0 0 1-6 0zM18 23v13M14 36h8M26 10h8l-1 10a3 3 0 0 1-6 0zM30 23v13M26 36h8',
-  monk: 'M8 22c4-8 10-12 16-12s12 4 16 12zM24 22v18M24 10V6',
-  photo: 'M8 16h8l3-4h10l3 4h8v20H8zM24 20a6 6 0 1 0 0 12a6 6 0 1 0 0-12z',
 };
 const icon = k => `<svg class="prog-icon" viewBox="0 0 48 48" aria-hidden="true"><circle class="prog-ring" cx="24" cy="24" r="22"/><path class="prog-path" d="${ICONS[k] || ICONS.blessing}"/></svg>`;
 
@@ -180,16 +195,24 @@ export function render() {
       ${sectionHead('progHeading')}
       <div class="prog">
         <div class="prog-thread" aria-hidden="true"><i class="prog-thread-fill"></i></div>
-        ${W.programme.map((p, i) => `
+        ${W.programme.map(d => `
+          <div class="prog-day" data-prog-day>
+            <span class="pd-label">${bi(d.day)}</span>
+            <span class="pd-date">${bi(d.date, 'span', '', true)}</span>
+          </div>
+          ${d.items.map((p, i) => {
+            const [clockEn, ampm] = p.timeEn.split(' ');
+            return `
           <div class="prog-item ${i % 2 ? 'is-right' : ''}" data-prog>
             <div class="prog-dot">${icon(p.icon)}</div>
             <div class="prog-card">
-              <span class="prog-time" data-num="${p.time}">${num(p.time)}</span>
+              <span class="prog-time"><b data-kh="${toKhDigits(p.time)}" data-en="${clockEn}">${getLang() === 'en' ? clockEn : toKhDigits(p.time)}</b> ${bi({ kh: p.periodKh, en: ampm }, 'small', 'prog-period')}</span>
               ${bi(p, 'span', 'prog-name')}
+              ${bi({ kh: p.en, en: p.kh }, 'span', 'prog-sub')}
             </div>
-          </div>`).join('')}
+          </div>`;
+          }).join('')}`).join('')}
       </div>
-      ${W.programme.length < 3 ? `<p class="prog-more" data-i18n="progMore">${t('progMore')}</p>` : ''}
     </section>
 
     <!-- 7 · LOVE STORY -->

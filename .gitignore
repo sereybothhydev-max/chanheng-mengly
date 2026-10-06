@@ -1,0 +1,8 @@
+node_modules
+dist
+qa
+# originals keep EXIF/GPS — only the stripped WebP copies in public/photos are published
+photos-src
+assets-src
+.vercel
+.DS_Store

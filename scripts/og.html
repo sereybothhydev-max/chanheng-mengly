@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="km"><head><meta charset="utf-8">
+<style>
+  @import url('/node_modules/@fontsource/moulpali/400.css');
+  @import url('/node_modules/@fontsource/moul/400.css');
+  @import url('/node_modules/@fontsource/pinyon-script/400.css');
+  @import url('/node_modules/@fontsource/cormorant-garamond/600.css');
+  @import url('/node_modules/@fontsource/kantumruy-pro/400.css');
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #12140b; }
+  .og { position: relative; width: 1200px; height: 630px; display: grid; grid-template-columns: 560px 1fr; }
+  .photo { position: relative; overflow: hidden; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+  .photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(18,20,11,0) 60%, #2a2f16); }
+  .side { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #f2ecda;
+    background: linear-gradient(rgba(20,24,8,.45), rgba(20,24,8,.6)), url(/textures/paper-olive.webp); background-size: auto, 320px; }
+  .side::before { content: ''; position: absolute; inset: 22px; border: 1.5px solid rgba(217,177,90,.7); border-radius: 4px; box-shadow: inset 0 0 0 5px rgba(42,47,22,.2), inset 0 0 0 6px rgba(217,177,90,.35); }
+  .foil { background: linear-gradient(100deg,#9c7124,#d9b15a 22%,#fbefc0 42%,#d9b15a 58%,#9c7124 80%,#d9b15a); -webkit-background-clip: text; background-clip: text; color: transparent; padding: .3em .1em .2em; }
+  .t { font-family: Moul; font-size: 34px; line-height: 1.8; }
+  .n { font-family: Moulpali; font-size: 64px; line-height: 1.8; margin: -10px 0; }
+  .amp { font-family: 'Pinyon Script'; font-size: 54px; color: #d9b15a; line-height: 1; }
+  .en { font-family: 'Pinyon Script'; font-size: 44px; color: #fbefc0; margin-top: 8px; }
+  .d { font-family: 'Kantumruy Pro'; font-size: 24px; margin-top: 10px; opacity: .9; }
+  .crest { width: 120px; }
+</style></head>
+<body><div class="og">
+  <div class="photo"><img src="/photos/09-angkor-embrace-1280.webp"></div>
+  <div class="side">
+    <svg class="crest" id="crest"></svg>
+    <div class="t foil">សិរីសួស្តីអាពាហ៍ពិពាហ៍</div>
+    <div class="n foil">ច័ន្ទហេង <span class="amp">&amp;</span> ម៉េងលី</div>
+    <div class="en">Chanheng &amp; Mengly</div>
+    <div class="d">ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦ · 20.12.2026</div>
+  </div>
+</div>
+<script type="module">
+  import raw from '/src/elements/crest.svg?raw';
+  document.getElementById('crest').outerHTML = raw.replace(/<metadata>[\s\S]*?<\/metadata>/, '').replace('<svg ', '<svg class="crest" ');
+  document.fonts.ready.then(() => document.body.dataset.ready = 1);
+</script>
+</body></html>

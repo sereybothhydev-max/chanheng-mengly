@@ -1,0 +1,72 @@
+[
+  {
+    "id": "01-field",
+    "w": 5035,
+    "h": 3356,
+    "orientation": "landscape",
+    "lqip": "data:image/webp;base64,UklGRp4AAABXRUJQVlA4IJIAAAAQBACdASoYABAAPu1iqU2ppaOiMAgBMB2JYgDCgCP2J5+QNORssePYdAD+6eMsvBHFa37sV6FG7f4RdM8rEyg9gSuK9SFPgsgLcc7URjhJDB3wPsOWWMc91FoOV4XzPrFPL98NdN/y+HNsADVi3hXzYYggIJdmBvPmgfC2qXIbtfAyVUuEDI9agnx4lg0LdQAAAA=="
+  },
+  {
+    "id": "02-bouquet",
+    "w": 6192,
+    "h": 4128,
+    "orientation": "landscape",
+    "lqip": "data:image/webp;base64,UklGRroAAABXRUJQVlA4IK4AAADwBACdASoYABAAPu1iqU2ppaOiMAgBMB2JbACdL11s/xa/7QAkx7qZ0aaSGn9MMzAA/sGteAAM5ELlaeT+9IPdEJOmGtMn3YHp62K8vxig6zMz+7XLDDwh9UE3+UB441CNoOC3u0p7SPtCg/CTPH818PxCiNnhEHljIPrSMs8/2+zPjo4YxF7VtupHtiJe6Za0stxdldYv1QUEyl26PgBp1wx7eHp3kdfKdABwAAA="
+  },
+  {
+    "id": "03-walk-away",
+    "w": 4128,
+    "h": 6192,
+    "orientation": "portrait",
+    "lqip": "data:image/webp;base64,UklGRj4BAABXRUJQVlA4IDIBAAAQBwCdASoYACQAPu1qqE8ppiOiKqwBMB2JaACsAY0+aq/7g5QA9XlIPA2vMW/zl7dHcFKUPTWX4Cfam4OaLL9wgAD+wACYNpzK+8ltNqACjF5iYUXDvAsRPpj1bcoDFkZyzLb9iQbfJT/ZI7WjLOyi5d8phGkr8hnp7tEBtrbLArcZb/dHZIQvvqsn0nz1gOLTbQz3RgYa08uDjU5G7PHmtZr9GTiEHRGNtZ1xYAtDt0XC8CJZnOWoD68DvOmqzVSo68tuLqr9dUsiSxHXx1k00/GTutZZTIyZrfxweYPldSP6PPn90HTcILUKRrzcSwJgeTK5t1wJOCMr7nUdstiIixhOCft4bvkiV2UjIuaaSAWEtQ0X6es71m54xJEArE5rwCNreoU4gPpPdFnnuh2sAAA="
+  },
+  {
+    "id": "04-raised",
+    "w": 1366,
+    "h": 2048,
+    "orientation": "portrait",
+    "lqip": "data:image/webp;base64,UklGRvIAAABXRUJQVlA4IOYAAAAQBgCdASoYACQAPu1or1IppSQiqrgIATAdiUAYbjujGkIKFs28kaeCVBteV62d2P8gXkkLSVQ07fAA/vSQ7pBYzxR95X5h3D4ZqPq9cXtvNfqnYOkBzfGNQGWzNXdYGqGIPcuy5b0YtEoR7pouq+9BS76jw6KAsWc2Ud08AyD/Yk+YZ1GCZj5YHQ65nNBz7d4f8Wscgl657T+hAjP7UyJQEGmsq6GBIFOozwOTteWMHWTgCmIMsy4BMYhg3q0GgLZ7OxXPtclfvf3BXMiM1xRoFXV7h+jNZKB6j0RZatnbJmH50gAAAA=="
+  },
+  {
+    "id": "05-dip",
+    "w": 1366,
+    "h": 2048,
+    "orientation": "portrait",
+    "lqip": "data:image/webp;base64,UklGRhABAABXRUJQVlA4IAQBAABwBgCdASoYACQAPu1kq04ppaQiKqwBMB2JZADDZz0EAolAu5ejuUE0t+WYRJUy2f2RNm2Bz6vC6lCfrpAA/uyEYLJikB6aZW8HmUShasGhEtdqJot3fmFhDjFoolhJ0fDArpPpJleyrVo4RT3ca8zg98atCDONirGLD0nHMYJNeBj7VIcbOGZ0B5vI+S3/XfQdViEzmg3vUekD1Nd+gQpSoimFS9XzDFhh/pfUe9hhM9oYGHQBJWiNmszEzeqHcZUZ0XcBi2feW8kUp5E+vvrpgCAMvDiqzxKdrAXphv/JbR/+o/Yuxxdok0oeAa6xpTjSf817L9cOFmndQUJ6dtB5sAAAAA=="
+  },
+  {
+    "id": "06-veil-canopy",
+    "w": 1366,
+    "h": 2048,
+    "orientation": "portrait",
+    "lqip": "data:image/webp;base64,UklGRgQBAABXRUJQVlA4IPgAAADQBQCdASoYACQAPu1mqk2ppaQiKrgN+TAdiUAWWYO6/EgGcxt6ZOuQKkmF80a2/oOKvA7wjF2AAP7mdvKidWrt8DxqJ2HzoLsruqQ86xm6cFVHNpZ1cBT6cFzhf1yOc6ybEDrkPt7Uy+ParwpgN05Iue9nGqxf9oLF3zbdY5pWdG6jlO5dAMYrdAzATUwipgSQLcYedU1vSuzUvmKbR9VbcCujVJ9RFxn3+r2unYfOSz4GtZaY2x6OystHASHyc5Xku0EACO2M3FgaphPr9XHOYZKBZaTAVga55Fiyv+M4zjYWB+vnobD1+tRfoyI2pkcqIu8VrifwAA=="
+  },
+  {
+    "id": "07-veil-blur",
+    "w": 1366,
+    "h": 2048,
+    "orientation": "portrait",
+    "lqip": "data:image/webp;base64,UklGRugAAABXRUJQVlA4INwAAACQBgCdASoYACQAPu1gqE6ppSOiMBVdUTAdiUAY/IXRSNmQh6i8GNypPt46JuvInI/nP1zqQgkT7x3xqBIAAP70Ipd1bART5n5F0W9cIgScS6zmgDg0BNnEJeWdMm2D37Aakrd+ycluChmpG0X8yLy1uhtUohFqECjA10CUjXn8LjUBn3uiNf68m2+ZdleWyknPff9DJg9LNyDF4qC4t74RDInDU64KVHWWHzuORmkkBs8t8Mcgsv/3dhB4noM8U7zcA5yZ7JVjiz9xKyOtL6V+q09QGnAlHQSwAAAA"
+  },
+  {
+    "id": "08-angkor-walk",
+    "w": 5472,
+    "h": 3648,
+    "orientation": "landscape",
+    "lqip": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAADQAwCdASoYABAAPu1iqU2ppaQiMAgBMB2JbAAD5hlK1nclzm4DNMAA/thc86HFVBCRVTWv4hz4d5f01UAkn9ktPHheqkFwJh4NTJ95LE4NCOcHXuOW3D4nQFrbMn2LIvAZQAQDwpebX6+tAjIUI+0CU4kg8xsHNpaXT3Z7NyOZ4Xn0n5xBvOgf6tCtiai8FGvaz1jRb0AX6tGprUqVEhpqOFE50AAA"
+  },
+  {
+    "id": "09-angkor-embrace",
+    "w": 3648,
+    "h": 5472,
+    "orientation": "portrait",
+    "lqip": "data:image/webp;base64,UklGRjQBAABXRUJQVlA4ICgBAADQBgCdASoYACQAPu1yq1Cpp6OiqrgKATAdiWoAvmWQ4MXMyojGa71L7A9pekbQ335RScpRj3ZhcKcNYH2WwbAA/PtObFFJBKGMbF4qn7PCoEW0JRaAiuqQWIRfDfYRO348+nNAZgB1FHG13N4uWy/hg4oueXyDTRDamdFR8yZxi7NRYAh67YXnGn7gAzOtn/40neUaCN6DygRd96Wvrfcg7yKRyogsQT6jnxT5oqN854p7xxDMFzX/Rkp4phxgXkW9FCWRocvcjL+L7ef0dZDGEYTvTJfqTmGlUc5jPDlopQ3ETbzzHwp09M42f45kGwHDS895E9AXw/mTCIXAUztBb2V/++83NUGPPXhbiTyfM69yjVztzi19IrEcc2CdWgMfgAUKBZAAAA=="
+  },
+  {
+    "id": "10-sunglasses",
+    "w": 4128,
+    "h": 6192,
+    "orientation": "portrait",
+    "lqip": "data:image/webp;base64,UklGRkABAABXRUJQVlA4IDQBAADwBwCdASoYACQAPu1cp04ppKMiMBqqqTAdiWwAtvrLwCAK8Oh5WyQaTWWS6yDVgxXP6Go7bXU/5Injx5coeYIKaMyOSkklqgAA/uRZlex0rQKWKWwkPW6EWsgNvD8FZ3Gh+G+TlX20CC7H2Y150FkYYVqJUR7eRnglueZdzdCyvHYaA2rYQq2RwBtAISgMMkUWj+gEv7oSSexPUiJxWT4U32/D7O+Fmo4bviFWLRi243Ey3g7kxpFjO7f8ac80GXU8kl+sTuJuo5Qa/seRJ/Y5al8cDd/ygz8tP3g15wUI3zCPcYjZTN7WXnf3PKrIQhomgeLRy842Z/JcIkJmYc5ZuOx0Aom9ifo7dmWj2EVTRh+T6llw+lMbVRkjBv2Zw0nAUf2nlu3UdDJt2n5Ab7Gjx+8AAA=="
+  }
+]

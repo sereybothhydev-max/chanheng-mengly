@@ -1,0 +1,130 @@
+/* ── tokens ─────────────────────────────────────────────────────── */
+:root {
+  --paper: #687437;
+  --paper-dk: #4f5a29;
+  --deep: #2a2f16;
+  --ink: #12140b;
+  --cream: #f2ecda;
+  --cream-2: #e8dfc4;
+  --accent: #c72c6a;
+  --f1: #9c7124; --f2: #d9b15a; --f3: #fbefc0;
+  --foil: linear-gradient(100deg, #9c7124 0%, #d9b15a 22%, #fbefc0 42%, #d9b15a 58%, #9c7124 80%, #d9b15a 100%);
+  /* deeper foil so gold still reads on cream paper */
+  --foil-deep: linear-gradient(100deg, #7a5517 0%, #b08431 24%, #e3c57c 44%, #b08431 60%, #6f4d14 82%, #b08431 100%);
+  --gold-line: linear-gradient(90deg, transparent, #b98f3e 18%, #f3dc9c 50%, #b98f3e 82%, transparent);
+  --tex-olive: url(/textures/paper-olive.webp);
+  --tex-cream: url(/textures/paper-cream.webp);
+  --tex-lining: url(/textures/paper-lining.webp);
+  --kh: 'Kantumruy Pro', system-ui, sans-serif;
+  --kh-head: 'Moul', 'Kantumruy Pro', serif;
+  --kh-logo: 'Moulpali', 'Moul', serif;
+  --en: 'Cormorant Garamond', 'Kantumruy Pro', Georgia, serif;
+  --script: 'Pinyon Script', 'Cormorant Garamond', cursive;
+  --top: env(safe-area-inset-top, 0px);
+  --pad-x: clamp(16px, 5vw, 48px);
+  --ease-silk: cubic-bezier(.22, .8, .2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; background: var(--ink); }
+html, body { margin: 0; overflow-x: clip; }
+body {
+  font-family: var(--kh);
+  font-size: clamp(15px, 1rem + .15vw, 17px);
+  line-height: 1.9;
+  color: var(--deep);
+  background: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body.is-locked { overflow: hidden; height: 100svh; }
+html[data-lang='en'] body { font-family: var(--en); font-size: clamp(16px, 1.05rem + .2vw, 19px); line-height: 1.7; }
+img { max-width: 100%; display: block; }
+img[style*='background-image'] { background-size: cover; background-position: center; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+a { color: inherit; -webkit-tap-highlight-color: transparent; }
+h1, h2, h3, p, figure { margin: 0; }
+:lang(km), [lang='km'] { letter-spacing: 0 !important; }
+.svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+:focus-visible { outline: 2px solid var(--f2); outline-offset: 3px; border-radius: 4px; }
+
+/* ── foil text (padding keeps Khmer marks inside the clip box) ────── */
+.foil {
+  background-image: var(--foil);
+  background-size: 220% 100%;
+  background-position: 35% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  padding: .3em .12em .2em;
+}
+.paper .foil { background-image: var(--foil-deep); }
+.shimmer { animation: shimmer 7s ease-in-out infinite; }
+@keyframes shimmer { 0%, 100% { background-position: 0% 0; } 50% { background-position: 100% 0; } }
+html.lite .shimmer { animation: none; }
+
+/* Headings: Moul in Khmer, Cormorant caps in English */
+.sec-title, .env-title, .cv-title, .thanks-title, .venue-name, .cp-name, .parents-h {
+  font-family: var(--kh-head); font-weight: 400; line-height: 1.8;
+}
+html[data-lang='en'] :is(.sec-title, .env-title, .cv-title, .thanks-title) {
+  font-family: var(--en); font-weight: 500; text-transform: uppercase; letter-spacing: .14em; line-height: 1.35;
+}
+
+.veil { position: fixed; inset: 0; background: #0b0d06; opacity: 0; pointer-events: none; z-index: 200; }
+
+/* section shells */
+section { position: relative; }
+.paper {
+  background-color: var(--cream);
+  background-image: var(--tex-cream);
+  background-size: 320px;
+  color: var(--deep);
+}
+.olive {
+  background-color: var(--paper-dk);
+  background-image: linear-gradient(rgba(20, 24, 8, .38), rgba(20, 24, 8, .5)), var(--tex-olive);
+  background-size: auto, 320px;
+  color: var(--cream);
+}
+.dark { background: var(--ink); color: var(--cream); }
+
+.sec-head { text-align: center; display: flex; flex-direction: column; align-items: center; margin-bottom: clamp(24px, 5vw, 48px); }
+.sec-divider { width: min(220px, 58vw); height: auto; display: block; }
+.sec-divider .kb-line { stroke: #b98f3e; }
+.on-dark .sec-divider .kb-line, .dark .sec-divider .kb-line, .olive .sec-divider .kb-line { stroke: var(--f2); }
+.sec-title { font-size: clamp(22px, 5.6vw, 40px); text-align: center; margin-top: .1em; }
+
+/* buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .55em;
+  min-height: 48px; padding: .55em 1.35em; border-radius: 999px;
+  font-size: .95em; line-height: 1.6; text-decoration: none; white-space: nowrap;
+  transition: transform .3s var(--ease-silk), box-shadow .3s, background-color .3s;
+}
+.btn svg { width: 1.2em; height: 1.2em; flex: none; }
+.btn-gold {
+  color: #2a1e06;
+  background: linear-gradient(120deg, #b98f3e, #f3dc9c 45%, #c9a24e 70%, #a77d2e);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset, 0 8px 22px -10px rgba(110, 76, 20, .8);
+}
+.btn-ghost { color: var(--deep); border: 1px solid rgba(156, 113, 36, .6); background: rgba(255, 250, 235, .4); }
+.btn:active { transform: scale(.97); }
+@media (hover: hover) { .btn:hover { transform: translateY(-2px); } }
+.btn-sm { min-height: 44px; font-size: .9em; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+
+.tap-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--f2); margin-right: .6em; vertical-align: middle; box-shadow: 0 0 0 0 rgba(217, 177, 90, .6); animation: tapPulse 2s infinite; }
+@keyframes tapPulse { 0% { box-shadow: 0 0 0 0 rgba(217, 177, 90, .6); } 80%, 100% { box-shadow: 0 0 0 12px rgba(217, 177, 90, 0); } }
+
+.toast {
+  position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); transform: translate(-50%, 20px);
+  background: rgba(18, 20, 11, .92); color: var(--cream); border: 1px solid rgba(217, 177, 90, .5);
+  padding: .5em 1.2em; border-radius: 999px; opacity: 0; pointer-events: none; transition: .35s var(--ease-silk); z-index: 120;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}

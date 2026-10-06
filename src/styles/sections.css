@@ -218,3 +218,11 @@ html.lite .candle.lit .c-flame, html.lite .candle.lit .c-flame-in, html.lite .ca
 .thanks-logo { width: min(64vw, 300px); margin: clamp(40px, 8vw, 64px) auto 0; }
 .credit { position: relative; text-align: center; margin-top: clamp(40px, 8vw, 64px); font-family: var(--en); font-size: 13px; letter-spacing: .06em; opacity: .6; }
 .credit a { text-decoration: none; border-bottom: 1px solid rgba(217, 177, 90, .4); }
+
+/* sideways phones: the strip alone fills the pinned screen */
+@media (max-height: 520px) {
+  .story-head { display: none; }
+  .story-pin { padding-top: calc(var(--top) + 60px); padding-bottom: 16px; }
+  .story-card { width: calc(50svh * .8 + 20px); }
+  .story-card figcaption { font-size: 12.5px; line-height: 1.7; padding: 6px 10px 8px; }
+}

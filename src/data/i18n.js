@@ -34,7 +34,8 @@ export const i18n = {
     countDone: 'ថ្ងៃនេះ ជាថ្ងៃមង្គលការរបស់យើង',
     marquee: 'សូមឲ្យគូស្វាមីភរិយាថ្មី ជួបតែសេចក្តីសុខ សុភមង្គល និងក្តីស្រលាញ់ ជារៀងរហូត',
 
-    progHeading: 'កម្មវិធីមង្គលការ',
+    progHeading: 'កម្មវិធី',
+    progHeading2: 'មង្គលអាពាហ៍ពិពាហ៍',
     progTime: 'ម៉ោង',
 
     storyHeading: 'ដំណើររឿងស្នេហ៍',
@@ -102,7 +103,8 @@ export const i18n = {
     countDone: 'Today is our wedding day',
     marquee: 'May the newlyweds be blessed with happiness, harmony and love forever',
 
-    progHeading: 'Wedding Programme',
+    progHeading: 'Programme',
+    progHeading2: 'of the Wedding Ceremony',
     progTime: '',
 
     storyHeading: 'Our Story',

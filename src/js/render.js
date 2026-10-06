@@ -51,7 +51,7 @@ const ICONS = {
   toast: 'M13 14h8l-.8 9a3.2 3.2 0 0 1-6.4 0zM17 26v10M13.5 36h7M27 14h8l-.8 9a3.2 3.2 0 0 1-6.4 0zM31 26v10M27.5 36h7M24 9V6M20 10l-1.5-2.5M28 10l1.5-2.5',
   blessing: 'M24 10c5 7 5 17 0 24c-5-7-5-17 0-24zM24 34c-8-3-13-10-12-19c6 3 10 9 12 19zM24 34c8-3 13-10 12-19c-6 3-10 9-12 19zM12 40h24',
 };
-const icon = k => `<svg class="prog-icon" viewBox="0 0 48 48" aria-hidden="true"><circle class="prog-ring" cx="24" cy="24" r="22"/><path class="prog-path" d="${ICONS[k] || ICONS.blessing}"/></svg>`;
+const icon = k => `<svg class="prog-icon" viewBox="4 4 40 40" aria-hidden="true"><path class="prog-path" d="${ICONS[k] || ICONS.blessing}"/></svg>`;
 
 const STORY = [
   { id: '03-walk-away', key: 'story1' },
@@ -190,28 +190,31 @@ export function render() {
       <p class="count-date">${bi({ kh: W.date.solarKh, en: W.date.solarEn })}</p>
     </section>
 
-    <!-- 6 · PROGRAMME -->
+    <!-- 6 · PROGRAMME (laid out like the printed card) -->
     <section class="s-prog paper" id="programme">
-      ${sectionHead('progHeading')}
-      <div class="prog">
-        <div class="prog-thread" aria-hidden="true"><i class="prog-thread-fill"></i></div>
+      <div class="prog-panel">
+        ${corners('pp-corner')}
+        <header class="pp-head" data-reveal-head>
+          <h2 class="pp-title foil" data-i18n="progHeading">${t('progHeading')}</h2>
+          <p class="pp-title2 foil" data-i18n="progHeading2">${t('progHeading2')}</p>
+        </header>
         ${W.programme.map(d => `
-          <div class="prog-day" data-prog-day>
-            <span class="pd-label">${bi(d.day)}</span>
-            <span class="pd-date">${bi(d.date, 'span', '', true)}</span>
-          </div>
-          ${d.items.map((p, i) => {
-            const [clockEn, ampm] = p.timeEn.split(' ');
-            return `
-          <div class="prog-item ${i % 2 ? 'is-right' : ''}" data-prog>
-            <div class="prog-dot">${icon(p.icon)}</div>
-            <div class="prog-card">
-              <span class="prog-time"><b data-kh="${toKhDigits(p.time)}" data-en="${clockEn}">${getLang() === 'en' ? clockEn : toKhDigits(p.time)}</b> ${bi({ kh: p.periodKh, en: ampm }, 'small', 'prog-period')}</span>
-              ${bi(p, 'span', 'prog-name')}
-              ${bi({ kh: p.en, en: p.kh }, 'span', 'prog-sub')}
-            </div>
-          </div>`;
-          }).join('')}`).join('')}
+          <h3 class="pd-head" data-prog-day>${bi(d.day, 'span', 'pd-label')} ${bi(d.date, 'span', 'pd-date', true)}</h3>
+          <div class="prog-list">
+            <div class="pl-line" aria-hidden="true"><i class="pl-fill"></i></div>
+            ${d.items.map(p => {
+              const [clockEn, ampm] = p.timeEn.split(' ');
+              return `
+            <div class="prog-row" data-prog>
+              <span class="pr-icon">${icon(p.icon)}</span>
+              <span class="pr-node" aria-hidden="true"><svg viewBox="0 0 20 20"><path class="kb-fill" d="M10 1.5l2.6 5.9 5.9 2.6-5.9 2.6L10 18.5l-2.6-5.9L1.5 10l5.9-2.6z"/><circle cx="10" cy="10" r="1.8" fill="#f2ecda"/></svg></span>
+              <div class="pr-text">
+                <span class="pr-time" data-kh="ម៉ោង ${toKhDigits(p.time)} ${p.periodKh}" data-en="${clockEn} ${ampm}">${getLang() === 'en' ? p.timeEn : `ម៉ោង ${toKhDigits(p.time)} ${p.periodKh}`}</span>
+                ${bi(p, 'span', 'pr-name', true)}
+              </div>
+            </div>`;
+            }).join('')}
+          </div>`).join('')}
       </div>
     </section>
 

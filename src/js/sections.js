@@ -171,21 +171,26 @@ function countdown() {
 
 // ── 6 · programme: gold thread draws, icons light up ────────────────
 function programme() {
-  const fill = document.querySelector('.prog-thread-fill');
-  if (R) { gsap.set(fill, { scaleY: 1 }); document.querySelectorAll('[data-prog]').forEach(i => i.classList.add('lit')); return; }
-  gsap.to(fill, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: '.prog', start: 'top 70%', end: 'bottom 60%', scrub: .6 } });
+  const rows = document.querySelectorAll('[data-prog]');
+  const fills = document.querySelectorAll('.pl-fill');
+  if (R) { gsap.set(fills, { scaleY: 1 }); rows.forEach(r => r.classList.add('lit')); return; }
+  fills.forEach(f => gsap.to(f, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: f.closest('.prog-list'), start: 'top 75%', end: 'bottom 65%', scrub: .6 } }));
+  gsap.from('.pp-title, .pp-title2', { opacity: 0, y: 14, duration: 1.1, stagger: .15, ease: 'silk', scrollTrigger: st('.pp-head') });
+  gsap.from('.pp-corner', { opacity: 0, scale: .8, duration: 1.2, stagger: .08, ease: 'silk', scrollTrigger: st('.prog-panel') });
   document.querySelectorAll('[data-prog-day]').forEach(d => {
-    gsap.from(d, { scale: .6, opacity: 0, duration: 1, ease: 'back.out(1.8)', scrollTrigger: st(d, { start: 'top 80%' }) });
+    gsap.fromTo(d, { clipPath: 'inset(-40% 50% -40% 50%)' }, { clipPath: 'inset(-40% -10% -40% -10%)', duration: 1.1, ease: 'power3.inOut', clearProps: 'clipPath', scrollTrigger: st(d, { start: 'top 85%' }) });
   });
-  document.querySelectorAll('[data-prog]').forEach(item => {
-    const paths = item.querySelectorAll('.prog-path, .prog-ring');
-    gsap.set(paths, { drawSVG: '0%' });
-    gsap.set(item.querySelector('.prog-card'), { opacity: 0, x: item.classList.contains('is-right') && innerWidth >= 600 ? -24 : 24 });
+  rows.forEach(row => {
+    const path = row.querySelector('.prog-path');
+    gsap.set(path, { drawSVG: '0%' });
+    gsap.set(row.querySelector('.pr-node'), { scale: 0 });
+    gsap.set(row.querySelector('.pr-text'), { opacity: 0, x: 18 });
     ScrollTrigger.create({
-      trigger: item, start: 'top 72%', once: true,
+      trigger: row, start: 'top 84%', once: true,
       onEnter: () => {
-        gsap.to(paths, { drawSVG: '100%', duration: 1.4, stagger: .12, ease: 'power2.inOut', onComplete: () => item.classList.add('lit') });
-        gsap.to(item.querySelector('.prog-card'), { opacity: 1, x: 0, duration: 1, ease: 'silk', delay: .3 });
+        gsap.to(row.querySelector('.pr-node'), { scale: 1, rotation: 90, duration: .6, ease: 'back.out(2.5)' });
+        gsap.to(path, { drawSVG: '100%', duration: 1.3, ease: 'power2.inOut', onComplete: () => row.classList.add('lit') });
+        gsap.to(row.querySelector('.pr-text'), { opacity: 1, x: 0, duration: .9, ease: 'silk', delay: .15 });
       },
     });
   });

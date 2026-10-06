@@ -40,7 +40,8 @@ export function setLang(next) {
 }
 
 /** wrap each space-separated phrase so Khmer only breaks between phrases */
-export const nowrap = s => String(s).split(' ').map(w => `<span class="nw">${w}</span>`).join(' ');
+// long phrases stay breakable so they never overflow narrow screens
+export const nowrap = s => String(s).split(' ').map(w => (w.length <= 14 ? `<span class="nw">${w}</span>` : w)).join(' ');
 
 /** helper: bilingual span from a {kh,en} pair */
 export const bi = (obj, tag = 'span', cls = '', nw = false) =>

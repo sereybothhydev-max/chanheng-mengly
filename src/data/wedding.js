@@ -52,16 +52,16 @@ export const wedding = {
   // icon: shrine | monk | lantern | guests | procession | urn | rings | hair | knot | dining | toast
   programme: [
     {
-      day: { kh: 'ថ្ងៃទី១', en: 'Day 1' },
+      day: { kh: 'កម្មវិធីទី១', en: 'Day 1' },
       date: { kh: 'ថ្ងៃសៅរ៍ ទី១៩ ខែធ្នូ ឆ្នាំ២០២៦', en: 'Saturday, 19 December 2026' },
       items: [
         { time: '03:30', periodKh: 'រសៀល', timeEn: '3:30 PM', icon: 'shrine', kh: 'ពិធីសែនក្រុងពាលី', en: 'Krong Pali Ceremony — paying respects to the land spirits' },
         { time: '04:30', periodKh: 'រសៀល', timeEn: '4:30 PM', icon: 'monk', kh: 'ពិធីសូត្រមន្តចម្រើនព្រះបរិត្ត', en: 'Blessing ceremony — monks chanting' },
-        { time: '06:30', periodKh: 'ល្ងាច', timeEn: '6:30 PM', icon: 'lantern', kh: 'ពិធីជើងពានស្ទា', en: 'Evening offering ceremony' },
+        { time: '06:30', periodKh: 'ល្ងាច', timeEn: '6:30 PM', icon: 'lantern', kh: 'ពិធីជាវខាន់ស្លា', en: 'Chav Khan Sla — evening offering ceremony' },
       ],
     },
     {
-      day: { kh: 'ថ្ងៃទី២', en: 'Day 2' },
+      day: { kh: 'កម្មវិធីទី២', en: 'Day 2' },
       date: { kh: 'ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦', en: 'Sunday, 20 December 2026' },
       items: [
         { time: '06:30', periodKh: 'ព្រឹក', timeEn: '6:30 AM', icon: 'guests', kh: 'ជួបជុំភ្ញៀវកិត្តិយសរៀបចំពិធីហែជំនូន', en: 'Honoured guests gather to prepare the groom’s procession' },

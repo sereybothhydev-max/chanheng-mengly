@@ -23,7 +23,7 @@ export const i18n = {
     andMrs: 'និងលោកស្រី',
 
     coupleHeading: 'កូនកំលោះ និង កូនក្រមុំ',
-    groomLabel: 'កូនកំលោះ',
+    groomLabel: 'កូនប្រុសនាម',
     brideLabel: 'កូនក្រមុំ',
 
     countHeading: 'រាប់ថយក្រោយ',

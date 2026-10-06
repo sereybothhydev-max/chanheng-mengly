@@ -5,7 +5,7 @@ import gallery from '../data/gallery.json';
 import { num } from './i18n.js';
 import { env } from './env.js';
 
-const src = (id, w) => `/photos/${id}-${w}.webp`;
+const src = (id, w) => `${import.meta.env.BASE_URL}photos/${id}-${w}.webp`;
 
 export function initGallery(getLenis) {
   const items = [...document.querySelectorAll('.m-item')];

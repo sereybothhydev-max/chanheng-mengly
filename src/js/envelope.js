@@ -74,7 +74,7 @@ export function envelopeHTML() {
         <div class="env-pocket">
           <svg viewBox="0 0 ${W} ${H}" aria-hidden="true">
             <defs>
-              <pattern id="pp-olive" patternUnits="userSpaceOnUse" width="220" height="220"><image href="/textures/paper-olive.webp" width="220" height="220"/></pattern>
+              <pattern id="pp-olive" patternUnits="userSpaceOnUse" width="220" height="220"><image href="${import.meta.env.BASE_URL}textures/paper-olive.webp" width="220" height="220"/></pattern>
               <linearGradient id="sh-left" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".07"/><stop offset="1" stop-color="#000" stop-opacity=".1"/></linearGradient>
               <linearGradient id="sh-right" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".16"/><stop offset="1" stop-color="#000" stop-opacity=".06"/></linearGradient>
               <linearGradient id="sh-bottom" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".1"/><stop offset=".75" stop-color="#fff" stop-opacity=".02"/><stop offset="1" stop-color="#fff" stop-opacity=".1"/></linearGradient>

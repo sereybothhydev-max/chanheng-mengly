@@ -6,3 +6,4 @@ photos-src
 assets-src
 .vercel
 .DS_Store
+dist-preview

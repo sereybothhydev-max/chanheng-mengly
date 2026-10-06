@@ -63,10 +63,10 @@ export const wedding = {
   },
 
   gifts: [
-    { holder: 'MENGLY HY', bank: 'ABA · KHQR', img: '/qr/qr-mengly.png', file: 'QR-Mengly-Hy.png' },
+    { holder: 'MENGLY HY', bank: 'ABA · KHQR', img: `${import.meta.env.BASE_URL}qr/qr-mengly.png`, file: 'QR-Mengly-Hy.png' },
   ],
 
-  music: '/audio/music.mp3',
+  music: `${import.meta.env.BASE_URL}audio/music.mp3`,
 
   credit: { text: 'Design inspired by Someth Phay · somethphay.me', url: 'https://somethphay.me' },
 };

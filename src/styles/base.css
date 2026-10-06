@@ -12,9 +12,7 @@
   /* deeper foil so gold still reads on cream paper */
   --foil-deep: linear-gradient(100deg, #7a5517 0%, #b08431 24%, #e3c57c 44%, #b08431 60%, #6f4d14 82%, #b08431 100%);
   --gold-line: linear-gradient(90deg, transparent, #b98f3e 18%, #f3dc9c 50%, #b98f3e 82%, transparent);
-  --tex-olive: url(/textures/paper-olive.webp);
-  --tex-cream: url(/textures/paper-cream.webp);
-  --tex-lining: url(/textures/paper-lining.webp);
+  /* --tex-olive / --tex-cream / --tex-lining are set from main.js as absolute URLs */
   --kh: 'Kantumruy Pro', system-ui, sans-serif;
   --kh-head: 'Moul', 'Kantumruy Pro', serif;
   --kh-logo: 'Moulpali', 'Moul', serif;

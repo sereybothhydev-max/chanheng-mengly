@@ -5,7 +5,7 @@ import { envelopeHTML } from './envelope.js';
 import { nameLogo } from './logo.js';
 import { crest, corners, divider, lotus } from './elements.js';
 
-const src = (id, w) => `/photos/${id}-${w}.webp`;
+const src = (id, w) => `${import.meta.env.BASE_URL}photos/${id}-${w}.webp`;
 const srcset = id => `${src(id, 640)} 640w, ${src(id, 1280)} 1280w, ${src(id, 2000)} 2000w`;
 const img = (id, { sizes = '100vw', cls = '', alt = '', eager = false } = {}) => {
   const p = gallery.find(g => g.id === id);

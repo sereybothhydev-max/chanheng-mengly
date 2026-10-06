@@ -31,6 +31,10 @@ gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, MotionPathPlugin, CustomEase);
 CustomEase.create('silk', 'M0,0 C0.22,0.8 0.2,1 1,1');
 CustomEase.create('hand', 'M0,0 C0.3,0.05 0.35,0.55 0.5,0.62 0.62,0.68 0.7,0.98 1,1');
 
+// paper textures resolved against the document (works under any base path)
+['olive', 'cream', 'lining'].forEach(n =>
+  document.documentElement.style.setProperty(`--tex-${n}`, `url("${new URL(`${import.meta.env.BASE_URL}textures/paper-${n}.webp`, document.baseURI).href}")`));
+
 const app = document.getElementById('app');
 app.innerHTML = render();
 apply();

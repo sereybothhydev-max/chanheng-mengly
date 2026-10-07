@@ -35,8 +35,8 @@ html[data-lang='en'] .parents-h { font-family: var(--en); font-weight: 600; lett
 .scallop-img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
 .scallop-heart { position: absolute; left: 50%; bottom: -5%; width: 16%; margin-left: -8%; background: var(--paper-dk); border-radius: 50%; padding: 2.5%; }
 .scallop-lotus { width: 100%; height: auto; display: block; }
-.cp-label { font-family: var(--en); font-size: 13px; letter-spacing: .3em; text-transform: uppercase; color: var(--f2); }
-html[data-lang='kh'] .cp-label { font-family: var(--kh); letter-spacing: 0; text-transform: none; font-size: 15px; }
+.cp-label { font-family: var(--en); font-size: 15px; letter-spacing: .3em; text-transform: uppercase; color: var(--f2); }
+html[data-lang='kh'] .cp-label { font-family: var(--kh); letter-spacing: 0; text-transform: none; font-size: clamp(19px, 5vw, 22px); line-height: 1.9; }
 .cp-name { font-size: clamp(26px, 7vw, 44px); display: inline-block; }
 @media (min-width: 900px) { .cp-name { font-size: clamp(26px, 2.8vw, 40px); white-space: nowrap; } }
 html[data-lang='en'] .cp-name { font-family: var(--script); font-size: clamp(38px, 10vw, 60px); line-height: 1.3; }

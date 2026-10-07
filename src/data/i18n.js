@@ -38,7 +38,7 @@ export const i18n = {
 
 
     candleHeading: 'បណ្តែតប្រទីបជូនពរ',
-    candleHint: 'ប្រទីបជូនពរ អណ្តែតនាំក្តីសុខ និងក្តីស្រលាញ់',
+    candleHint: 'ប្រទីបជូនពរ រួមគ្នាជាដួងចិត្តតែមួយ',
 
     galleryHeading: 'កម្រងរូបភាព',
 
@@ -99,7 +99,7 @@ export const i18n = {
 
 
     candleHeading: 'Float a lantern of blessing',
-    candleHint: 'Lanterns of blessing, carrying happiness and love',
+    candleHint: 'Lanterns of blessing, joined as one heart',
 
     galleryHeading: 'Gallery',
 

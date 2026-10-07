@@ -263,17 +263,13 @@ export function render() {
       </div>
     </section>
 
-    <!-- 11 · GIFT -->
-    <section class="s-gift olive" id="gift">
-      ${sectionHead('giftHeading', { light: true })}
-      <p class="gift-sub" data-i18n="giftSub">${t('giftSub')}</p>
-      <div class="gift-grid">
-        ${W.gifts.map(g => `
-          <figure class="gift-card" data-gift>
-            <div class="gift-qr"><img src="${g.img}" alt="KHQR ${g.holder}" loading="lazy" width="1414" height="2000"></div>
-            <figcaption><span class="gift-holder">${g.holder}</span><span class="gift-bank">${g.bank}</span></figcaption>
-            <a class="btn btn-gold btn-sm" href="${g.img}" download="${g.file}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="saveQR">${t('saveQR')}</span></a>
-          </figure>`).join('')}
+    <!-- 11 · STATEMENT OF GRATITUDE -->
+    <section class="s-grat olive" id="gratitude">
+      <div class="grat-frame">
+        <div class="grat-crest">${crest('grat-crest-svg')}</div>
+        <h2 class="grat-title foil" data-i18n="gratHeading">${t('gratHeading')}</h2>
+        ${divider('grat-divider')}
+        <p class="grat-body" data-reveal="lines" data-i18n="gratBody">${t('gratBody')}</p>
       </div>
     </section>
 

@@ -6,7 +6,7 @@ import fs from 'node:fs';
 const base = process.argv[2] || 'http://127.0.0.1:5173/';
 const out = process.argv[3] || 'qa/sections';
 const VIEWPORTS = [[320, 568], [390, 844], [740, 360], [1280, 800]];
-const SECTIONS = ['cover', 'invite', 'couple', 'count', 'programme', 'candle', 'gallery', 'venue', 'gift', 'thanks'];
+const SECTIONS = ['cover', 'invite', 'couple', 'count', 'programme', 'candle', 'gallery', 'venue', 'gratitude', 'thanks'];
 const lang = process.env.LANG_MODE || 'kh';
 
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--use-gl=swiftshader', '--enable-webgl', '--ignore-gpu-blocklist'] });

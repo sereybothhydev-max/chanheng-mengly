@@ -38,7 +38,7 @@ export function initSections() {
   initLake(env);
   initGallery(() => lenis);
   venue();
-  gift();
+  gratitude();
   thanks();
   if (env.gl) initCoverFX(document.getElementById('coverGL'));
 
@@ -232,9 +232,22 @@ function downloadICS() {
 }
 
 // ── 11 · gift card turns in ─────────────────────────────────────────
-function gift() {
+function gratitude() {
   if (R) return;
-  gsap.from('[data-gift]', { rotationY: -75, opacity: 0, transformOrigin: '0% 50%', duration: 1.6, stagger: .2, ease: 'silk', scrollTrigger: st('.gift-grid', { start: 'top 85%' }) });
+  const body = document.querySelector('.grat-body');
+  gsap.set(body.querySelectorAll('.rv-word'), { opacity: 0 });
+  gsap.timeline({ scrollTrigger: st('.grat-frame', { start: 'top 80%' }) })
+    .from('.grat-crest', { opacity: 0, y: 14, duration: 1, ease: 'silk' })
+    .fromTo('.grat-title', { clipPath: 'inset(-40% 50% -40% 50%)' }, { clipPath: 'inset(-40% -10% -40% -10%)', duration: 1.3, ease: 'power3.inOut', clearProps: 'clipPath' }, .2)
+    .from('.grat-divider path', { drawSVG: '50% 50%', duration: 1.2, ease: 'power2.inOut' }, .6);
+  ScrollTrigger.create({
+    ...st(body, { start: 'top 85%' }),
+    onEnter: () => {
+      body.dataset.done = 1;
+      gsap.fromTo(body.querySelectorAll('.rv-word'), { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: .8, stagger: .05, ease: 'power2.out', delay: .4 });
+    },
+  });
 }
 
 // ── 12 · thank you: fireworks ─────────────────────────────────────────────────────────────────────────

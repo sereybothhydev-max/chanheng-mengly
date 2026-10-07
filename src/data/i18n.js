@@ -46,9 +46,9 @@ export const i18n = {
     openMaps: 'បើក Google Maps',
     saveCal: 'រក្សាទុកក្នុងប្រតិទិន',
 
-    giftHeading: 'ចំណងដៃ',
-    giftSub: 'ក្តីស្រលាញ់ និងការចូលរួមរបស់លោកអ្នក គឺជាកាដូដ៏មានតម្លៃបំផុត',
-    saveQR: 'រក្សាទុក QR',
+    gratHeading: 'សេចក្តីថ្លែងអំណរគុណ',
+    gratBody:
+      'យើងខ្ញុំជាមាតាបិតា កូនប្រុស - កូនស្រី សូម ថ្លែងអំណរគុណយ៉ាងជ្រាលជ្រៅ ចំពោះការអញ្ជើញចូលរួម ជាភ្ញៀវកិត្តិយសក្នុងពិធីរៀបអាពាហ៍ពិពាហ៍ កូនប្រុស - កូនស្រី របស់យើងខ្ញុំ។ សូមគោរពជូនពរដល់ ឯកឧត្តម លោកជំទាវ លោកអ្នកឧកញ៉ា អ្នកឧកញ៉ា លោក លោកស្រី អ្នកនាងកញ្ញា និងភ្ញៀវកិត្តិយសទាំងអស់ សូម ប្រកបដោយភាពសុខដុមរមនា និងសេចក្តីសុខមង្គល ក្នុងគ្រួសារ ជានិច្ចនិរន្តរ៍។',
 
     thanksHeading: 'សូមអរគុណ',
     thanksBody: 'វត្តមានរបស់លោកអ្នក គឺជាកិត្តិយស និងជាពរជ័យដ៏ធំធេងសម្រាប់គ្រួសារយើងខ្ញុំ',
@@ -107,9 +107,9 @@ export const i18n = {
     openMaps: 'Open Google Maps',
     saveCal: 'Save to Calendar',
 
-    giftHeading: 'Wedding Gift',
-    giftSub: 'Your love and presence are the most precious gift of all',
-    saveQR: 'Save QR',
+    gratHeading: 'A Word of Gratitude',
+    gratBody:
+      'We, the parents of the groom and the bride, extend our deepest gratitude to you for honouring us with your presence as our distinguished guests at the wedding of our son and daughter. We respectfully wish Their Excellencies, Lok Chumteavs, Oknhas, ladies and gentlemen, and all our honoured guests lasting harmony, happiness and blessings in your families, always.',
 
     thanksHeading: 'Thank You',
     thanksBody: 'Your presence is an honour and a great blessing for our families',

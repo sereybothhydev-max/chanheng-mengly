@@ -238,8 +238,8 @@ html[data-lang='en'] .grat-body { font-family: var(--en); font-style: italic; fo
 /* ── 12 · thank you ────────────────────────────────────────────── */
 .s-thanks { overflow: hidden; text-align: center; padding-bottom: calc(72px + env(safe-area-inset-bottom)) !important; }
 .thanks-bg { position: absolute; inset: 0; }
-.thanks-bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.32) saturate(.7); }
-.thanks-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, var(--ink), rgba(18, 20, 11, .55) 30%, rgba(18, 20, 11, .75) 75%, var(--ink)); }
+.thanks-bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.5) saturate(.8); }
+.thanks-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, var(--ink), rgba(18, 20, 11, .4) 30%, rgba(18, 20, 11, .62) 75%, var(--ink)); }
 .thanks-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; pointer-events: none; }
 .thanks-inner a, .thanks-inner button { pointer-events: auto; }
 .fireworks { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; touch-action: manipulation; }

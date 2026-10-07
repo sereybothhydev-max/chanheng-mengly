@@ -73,7 +73,7 @@ const candleSVG = i => `<svg class="candle" style="--i:${i}" viewBox="0 0 40 120
 
 export function render() {
   const d = W.date.row;
-  const venueName = W.venue.en ? bi(W.venue) : W.venue.kh;
+  const venueName = W.venue.en ? bi(W.venue) : W.venue.kh.split(' ').map(w => `<span class="nw">${w}</span>`).join(' ');
   const mapQ = W.venue.lat != null ? `${W.venue.lat},${W.venue.lng}` : encodeURIComponent(W.venue.kh);
 
   return `

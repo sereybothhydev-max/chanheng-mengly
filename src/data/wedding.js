@@ -77,7 +77,7 @@ export const wedding = {
   ],
 
   venue: {
-    kh: 'ហាង ពន្លឺថ្មី',
+    kh: 'ភោជនីដ្ឋាន ពន្លឺថ្មី(តាទ្រី)',
     en: null, // optional English name; Khmer is shown when null
     mapUrl: 'https://maps.app.goo.gl/2jc1AQLenEmZikmP7?g_st=ic',
     // Fill in exact coordinates to pin the embedded map precisely.

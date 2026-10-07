@@ -117,9 +117,20 @@ html[data-lang='en'] .pr-name { font-family: var(--en); font-weight: 600; font-s
 .s-candle { height: 100svh; min-height: 520px; background: #07080a; color: var(--cream); }
 .lake { position: absolute; inset: 0; overflow: hidden; }
 .lake-sky { position: absolute; left: 0; right: 0; top: 0; height: 58%; overflow: hidden; container-type: size; }
-/* horizon = temple base: the photo is scaled so its top ~60% fills the sky */
-.lake-img { position: absolute; top: 0; left: 50%; translate: -50% 0; width: max(100cqw, 215cqh); max-width: none; height: auto; aspect-ratio: 3 / 2; }
-.lake-sky .lake-img { filter: brightness(.5) saturate(.85) sepia(.3) hue-rotate(-10deg) contrast(1.06); }
+/* horizon = the path at the couple's feet: the photo is bottom-anchored so its
+   y≈88% (at their shoes) sits on the waterline, with the towers above. Sized by
+   height so the whole scene shows; on wide screens a blurred copy fills the sides. */
+.lake-img { --iw: max(100cqw, 205cqh); position: absolute; top: auto; bottom: calc(var(--iw) / 1.5 * -.12); left: 50%; translate: -50% 0; width: var(--iw); max-width: none; height: auto; aspect-ratio: 3 / 2; }
+.lake-fill { position: absolute; inset: -30px; width: calc(100% + 60px); height: calc(100% + 60px); max-width: none; object-fit: cover; object-position: 50% 80%; filter: blur(22px) brightness(.45) saturate(.8); display: none; }
+.lake-sky .lake-img { filter: brightness(.62) saturate(.9) sepia(.22) hue-rotate(-10deg) contrast(1.05); }
+.lake-sky .lake-fill { filter: blur(22px) brightness(.4) saturate(.8) sepia(.22); }
+@media (min-aspect-ratio: 13/10) {
+  .lake-sky { height: 64%; }
+  .lake-water { height: 36% !important; }
+  .lake-refl { height: calc(64 / 36 * 100%) !important; }
+  .lake-img { --iw: 205cqh; -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); }
+  .lake-fill { display: block; }
+}
 .lake-sky::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 12, 24, .75), rgba(60, 34, 20, .25) 60%, rgba(240, 160, 80, .18)); }
 .lake-water { position: absolute; left: 0; right: 0; bottom: 0; height: 42%; overflow: hidden; touch-action: manipulation; cursor: pointer; }
 .lake-refl { position: absolute; left: -2%; right: -2%; top: 0; height: calc(58 / 42 * 100%); transform: scaleY(-1); transform-origin: 50% 50%; container-type: size; overflow: hidden; }
@@ -127,6 +138,7 @@ html[data-lang='en'] .pr-name { font-family: var(--en); font-weight: 600; font-s
 .lake-refl .lake-img { filter: brightness(.34) saturate(.6) sepia(.3) hue-rotate(170deg) blur(2px); animation: lakeWave 7s ease-in-out infinite; transform-origin: 50% 100%; }
 @keyframes lakeWave { 0%, 100% { transform: scaleX(1.02) skewX(0deg); } 50% { transform: scaleX(1.025) skewX(.6deg) translateY(-2px); } }
 html.lite .lake-refl .lake-img { animation: none; filter: brightness(.34) saturate(.6) sepia(.3) hue-rotate(170deg); }
+.lake-refl .lake-fill { filter: blur(22px) brightness(.28) saturate(.6) sepia(.3) hue-rotate(170deg); }
 .lake-water::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(240, 170, 90, .16), rgba(10, 18, 28, .5) 40%, rgba(5, 8, 12, .92)); }
 .lake-streaks { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: .5; mix-blend-mode: screen;
   background: repeating-linear-gradient(180deg, rgba(255, 220, 160, 0) 0 7px, rgba(255, 220, 160, .07) 8px, rgba(255, 220, 160, 0) 10px 16px);
@@ -149,7 +161,7 @@ html.lite .lantern--f .lt-inner { animation: none; }
 .lantern .lt-glow { position: absolute; left: 50%; top: 20%; width: 140px; height: 70px; margin: -35px 0 0 -70px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 190, 100, .45), rgba(255, 190, 100, 0)); }
 @keyframes flick { from { transform: scale(1, 1); opacity: .9; } to { transform: scale(.92, 1.08) translateY(-1px); opacity: 1; } }
 .lake-text { position: absolute; left: 0; right: 0; top: calc(var(--top) + 76px); text-align: center; padding: 0 var(--pad-x); z-index: 4; pointer-events: none; }
-.lake-hint { font-size: 14px; opacity: .85; margin-top: .2em; }
+.lake-hint { font-size: 14px; opacity: .95; margin-top: .2em; text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 12px rgba(0,0,0,.7); }
 
 /* ── 9 · gallery ───────────────────────────────────────────────── */
 .masonry { columns: 2; column-gap: 10px; max-width: 1180px; margin: 0 auto; }

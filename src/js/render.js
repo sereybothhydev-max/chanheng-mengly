@@ -207,9 +207,9 @@ export function render() {
     <!-- 8 · CANDLELIGHT -->
     <section class="s-candle" id="candle">
       <div class="lake" id="lake">
-        <div class="lake-sky">${img('08-angkor-walk', { sizes: '100vw', cls: 'lake-img' })}</div>
+        <div class="lake-sky">${img('11-angkor-lake', { sizes: '50vw', cls: 'lake-fill' })}${img('11-angkor-lake', { sizes: '100vw', cls: 'lake-img' })}</div>
         <div class="lake-water">
-          <div class="lake-refl">${img('08-angkor-walk', { sizes: '100vw', cls: 'lake-img' })}</div>
+          <div class="lake-refl">${img('11-angkor-lake', { sizes: '50vw', cls: 'lake-fill' })}${img('11-angkor-lake', { sizes: '100vw', cls: 'lake-img' })}</div>
           <div class="lake-streaks"></div>
           <canvas class="lake-canvas" id="lakeCanvas" aria-hidden="true"></canvas>
           <div class="lanterns" id="lanterns"></div>

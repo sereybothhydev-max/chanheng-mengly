@@ -66,7 +66,7 @@ export function initFireworks(canvas, env) {
       const r = rockets[i];
       const ox = r.x, oy = r.y;
       r.x += r.vx * dt; r.y += r.vy * dt; r.vy += .12 * dt;
-      ctx.strokeStyle = 'rgba(255, 236, 190, .95)'; ctx.lineWidth = 2.6; ctx.lineCap = 'round';
+      ctx.strokeStyle = 'rgba(255, 236, 190, .7)'; ctx.lineWidth = 2.6; ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(ox, oy); ctx.lineTo(r.x, r.y); ctx.stroke();
       if (r.y <= r.ty || r.vy >= -.5) { burst(r.x, r.y, r.pal); rockets.splice(i, 1); }
     }
@@ -78,13 +78,13 @@ export function initFireworks(canvas, env) {
       p.life -= p.decay * dt;
       if (p.life <= 0) { sparks.splice(i, 1); continue; }
       if (p.flash) {
-        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 110 * p.life);
-        g.addColorStop(0, `rgba(255,240,200,${.55 * p.life})`); g.addColorStop(1, 'rgba(255,240,200,0)');
-        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, 110 * p.life, 0, Math.PI * 2); ctx.fill();
+        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 70 * p.life);
+        g.addColorStop(0, `rgba(255,240,200,${.2 * p.life})`); g.addColorStop(1, 'rgba(255,240,200,0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, 70 * p.life, 0, Math.PI * 2); ctx.fill();
         continue;
       }
       const a = p.glitter ? p.life * (.4 + .6 * Math.random()) : p.life;
-      ctx.globalAlpha = Math.max(0, a);
+      ctx.globalAlpha = Math.max(0, a * .78);
       ctx.strokeStyle = p.color; ctx.lineWidth = 2.4;
       ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(p.px, p.py); ctx.lineTo(p.x, p.y); ctx.stroke();

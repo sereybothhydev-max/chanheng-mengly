@@ -36,6 +36,7 @@ export function initGallery(getLenis) {
     opener = document.activeElement;
     viewer.hidden = false;
     getLenis()?.stop();
+    document.documentElement.style.overflow = 'hidden'; // no page scrollbar behind the photo
     document.body.style.overflow = 'hidden';
     go(i, false);
     gsap.fromTo(viewer, { opacity: 0 }, { opacity: 1, duration: .35 });
@@ -45,6 +46,7 @@ export function initGallery(getLenis) {
   const close = () => {
     gsap.to(viewer, { opacity: 0, duration: .3, onComplete: () => { viewer.hidden = true; } });
     getLenis()?.start();
+    document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
     opener?.focus?.();
   };

@@ -43,6 +43,51 @@ function heartSlots(n) {
   return out;
 }
 
+// Small lamps filling the inside of the heart: an even hex grid in heart space,
+// keeping points that are inside the outline and not too close to it.
+function interiorPoints(spacing) {
+  const outline = heartSlots(240);
+  const inside = (x, y) => {
+    let c = false;
+    for (let i = 0, j = outline.length - 1; i < outline.length; j = i++) {
+      const a = outline[i], b = outline[j];
+      if ((a.v > y) !== (b.v > y) && x < ((b.u - a.u) * (y - a.v)) / (b.v - a.v) + a.u) c = !c;
+    }
+    return c;
+  };
+  const clearance = (x, y) => Math.min(...outline.map(o => Math.hypot(o.u - x, o.v - y)));
+  const pts = [], rowH = spacing * Math.sqrt(3) / 2;
+  for (let r = 0, y = -1.2; y <= 1.1; y += rowH, r++) {
+    for (let x = -1.1 + (r % 2 ? spacing / 2 : 0); x <= 1.1; x += spacing) {
+      if (inside(x, y) && clearance(x, y) > spacing * .62) pts.push({ u: x, v: y });
+    }
+  }
+  return pts;
+}
+
+// One pre-rendered lamp sprite (glow + small gold cup + flame), drawn many times.
+function lampSprite(px) {
+  const c = document.createElement('canvas');
+  c.width = c.height = px;
+  const g = c.getContext('2d'), m = px / 2;
+  const halo = g.createRadialGradient(m, m * .9, 0, m, m * .9, m);
+  halo.addColorStop(0, 'rgba(255, 214, 140, .55)'); halo.addColorStop(.35, 'rgba(255, 190, 100, .22)'); halo.addColorStop(1, 'rgba(255, 190, 100, 0)');
+  g.fillStyle = halo; g.fillRect(0, 0, px, px);
+  // cup
+  const cw = px * .22, ch = px * .1, cy = m + px * .06;
+  const cup = g.createLinearGradient(m - cw, 0, m + cw, 0);
+  cup.addColorStop(0, '#9c7124'); cup.addColorStop(.45, '#fbefc0'); cup.addColorStop(1, '#9c7124');
+  g.fillStyle = cup;
+  g.beginPath(); g.ellipse(m, cy, cw, ch, 0, 0, Math.PI); g.fill();
+  g.fillStyle = 'rgba(255, 246, 220, .9)'; g.beginPath(); g.ellipse(m, cy, cw, ch * .35, 0, 0, Math.PI * 2); g.fill();
+  // flame
+  const fl = g.createRadialGradient(m, cy - px * .1, 0, m, cy - px * .1, px * .11);
+  fl.addColorStop(0, '#fffbe8'); fl.addColorStop(.5, '#ffd36b'); fl.addColorStop(1, 'rgba(255, 160, 60, 0)');
+  g.fillStyle = fl;
+  g.beginPath(); g.ellipse(m, cy - px * .1, px * .06, px * .11, 0, 0, Math.PI * 2); g.fill();
+  return c;
+}
+
 export function initLake(env) {
   const water = document.querySelector('.lake-water');
   const canvas = document.getElementById('lakeCanvas');
@@ -64,6 +109,13 @@ export function initLake(env) {
     holder.appendChild(el);
     return { el, ...s, jitter: Math.random() * .18, spread: .85 + Math.random() * .4 };
   });
+
+  // small lamps inside the heart (spacing ≈ 0.8 × the gap between outline lanterns)
+  const gap = slots.reduce((a, s, i) => { const n = slots[(i + 1) % slots.length]; return a + Math.hypot(n.u - s.u, n.v - s.v); }, 0) / slots.length;
+  const lamps = interiorPoints(gap * (env.lite ? .9 : .82)).map(p => ({ ...p, jitter: Math.random() * .3, phase: Math.random() * 6.28, spread: .85 + Math.random() * .4 }));
+  const LAMP_PX = 64; // sprite resolution; drawn at ≈ 40% of a lotus lantern
+  const sprite = lampSprite(LAMP_PX * dpr);
+  const lampDraw = []; // filled each frame: [x, y, size, alpha, Z]
 
   // perspective projection of a point lying on the water plane
   const project = (u, v, theta) => {
@@ -95,6 +147,14 @@ export function initLake(env) {
   // reduced motion: the finished heart, resting still
   function still() {
     flock.forEach(f => { const q = project(f.u, f.v, .25); place(f, q.x, q.y, q.p, 1, q.Z); });
+    ctx.clearRect(0, 0, w, h);
+    lamps.forEach(l => { const q = project(l.u, l.v, .25); drawLamp(q.x, q.y, q.p, 1); });
+  }
+  function drawLamp(x, y, p, a) {
+    const size = 30 * p; // on-screen sprite size (the glow is wider than the cup)
+    ctx.globalAlpha = a;
+    ctx.drawImage(sprite, x - size / 2, y - size * .55, size, size);
+    ctx.globalAlpha = 1;
   }
 
   let last = performance.now(), ambient = 0, clock = 0, released = false, settled = false;
@@ -132,6 +192,23 @@ export function initLake(env) {
         f.el.style.opacity = '0';
       }
     });
+    lampDraw.length = 0;
+    lamps.forEach(l => {
+      const q = project(l.u, l.v, theta);
+      const flick = .82 + .18 * Math.sin(clock * 6 + l.phase) * Math.sin(clock * 2.3 + l.phase * 2);
+      if (t < T_RELEASE) {
+        const k = easeOut(Math.min(1, Math.max(0, (t - l.jitter) / (T_RELEASE - l.jitter))));
+        const x0 = w / 2 + (q.x - w / 2) * 1.3, y0 = h + 20;
+        lampDraw.push([x0 + (q.x - x0) * k, y0 + (q.y - y0) * k, q.p * (1.25 - .25 * k), Math.min(1, k * 2) * flick, q.Z]);
+      } else if (t < T_RELEASE + T_HOLD) {
+        lampDraw.push([q.x, q.y, q.p, flick, q.Z]);
+      } else if (t < T_RELEASE + T_HOLD + T_DRIFT) {
+        const k = easeInOut((t - T_RELEASE - T_HOLD) / T_DRIFT);
+        lampDraw.push([q.x + (q.x - w / 2) * .7 * l.spread * k, q.y - h * .34 * k * l.spread, q.p * (1 - .5 * k), (1 - k) * flick, q.Z]);
+      }
+    });
+    lampDraw.sort((a, b) => b[4] - a[4]); // far first
+
     if (t >= T_RELEASE && !settled) { settled = true; add(w / 2, h * .56, 1.1); }
 
     ambient -= dt;
@@ -166,6 +243,7 @@ export function initLake(env) {
         ctx.stroke();
       }
     }
+    for (const [x, y, p, a] of lampDraw) drawLamp(x, y, p, a);
     raf = requestAnimationFrame(frame);
   };
   const start = () => { if (!raf && visible && !env.reduced) { last = performance.now(); raf = requestAnimationFrame(frame); } };

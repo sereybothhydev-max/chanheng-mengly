@@ -219,8 +219,7 @@ html.lite .lantern--f .lt-inner { animation: none; }
 .s-grat { text-align: center; }
 .grat-frame {
   position: relative; max-width: 680px; margin: 0 auto; padding: clamp(28px, 6vw, 52px) clamp(18px, 6vw, 56px) clamp(30px, 6vw, 52px);
-  border: 1px solid rgba(212, 175, 55, .55); border-radius: 4px;
-  box-shadow: inset 0 0 0 5px rgba(20, 24, 8, .28), inset 0 0 0 6px rgba(212, 175, 55, .28);
+  /* no frame: text sits directly on the olive background */
 }
 .grat-crest { width: clamp(70px, 18vw, 110px); margin: 0 auto 4px; }
 .grat-frame--apology { margin-top: clamp(28px, 6vw, 48px); }

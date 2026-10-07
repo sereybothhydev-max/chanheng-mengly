@@ -110,6 +110,43 @@ export function initLake(env) {
     return { el, ...s, jitter: Math.random() * .18, spread: .85 + Math.random() * .4 };
   });
 
+  // free-floating lanterns in the open water around the heart, in mirrored pairs
+  // (preferred spots in water-box fractions; pairs that would touch the heart are skipped)
+  const PAIRS = [
+    [[.09, .3], [.91, .3]], [[.14, .8], [.86, .8]], [[.2, .07], [.8, .07]],
+    [[.05, .56], [.95, .56]], [[.3, .94], [.7, .94]], [[.34, .02], [.66, .02]],
+  ];
+  const drifters = [];
+  const maxDrifters = env.lite ? 4 : 8;
+  function layoutDrifters() {
+    drifters.forEach(d => d.el.remove()); drifters.length = 0;
+    if (!w) return;
+    // everything the heart can cover while it turns (outline + interior, three angles)
+    const cover = [];
+    [-.45, 0, .45].forEach(th => slots.concat(lamps).forEach(s2 => cover.push(project(s2.u, s2.v, th))));
+    const clear = (x, y) => cover.every(c => Math.hypot(c.x - x, (c.y - y) * 1.4) > (w < 500 ? 50 : 62)); // room for the drift + glow
+    for (const pair of PAIRS) {
+      if (drifters.length >= maxDrifters) break;
+      const pts = pair.map(([fx, fy]) => [fx * w, fy * h]);
+      if (!pts.every(([x, y]) => x > 18 && x < w - 18 && clear(x, y))) continue;
+      pts.forEach(([x, y]) => {
+        const el = document.createElement('div');
+        el.className = 'lantern lantern--f lantern--drift';
+        el.style.setProperty('--bob-delay', `${(-Math.random() * 3).toFixed(2)}s`);
+        el.innerHTML = LANTERN_HTML();
+        el.style.opacity = '0';
+        holder.appendChild(el);
+        drifters.push({ el, x, y, ph: Math.random() * 6.28, ph2: Math.random() * 6.28, scale: .5 + .45 * (y / h) });
+      });
+    }
+  }
+  const moveDrifters = (time, fade) => drifters.forEach(d => {
+    const x = d.x + Math.sin(time * .18 + d.ph) * 14, y = d.y + Math.sin(time * .13 + d.ph2) * 5;
+    d.el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) scale(${d.scale.toFixed(3)})`;
+    d.el.style.opacity = (fade * .92).toFixed(3);
+    d.el.style.zIndex = String(Math.round(10 + (d.y / h) * 20));
+  });
+
   // small lamps inside the heart (spacing ≈ 0.8 × the gap between outline lanterns)
   const gap = slots.reduce((a, s, i) => { const n = slots[(i + 1) % slots.length]; return a + Math.hypot(n.u - s.u, n.v - s.v); }, 0) / slots.length;
   const lamps = interiorPoints(gap * (env.lite ? .9 : .82)).map(p => ({ ...p, jitter: Math.random() * .3, phase: Math.random() * 6.28, spread: .85 + Math.random() * .4 }));
@@ -138,6 +175,7 @@ export function initLake(env) {
     w = Math.round(r.width); h = Math.round(r.height);
     canvas.width = w * dpr; canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    layoutDrifters();
     if (env.reduced) still();
   });
   ro.observe(water);
@@ -149,6 +187,7 @@ export function initLake(env) {
     flock.forEach(f => { const q = project(f.u, f.v, .25); place(f, q.x, q.y, q.p, 1, q.Z); });
     ctx.clearRect(0, 0, w, h);
     lamps.forEach(l => { const q = project(l.u, l.v, .25); drawLamp(q.x, q.y, q.p, 1); });
+    moveDrifters(0, 1);
   }
   function drawLamp(x, y, p, a) {
     const size = 30 * p; // on-screen sprite size (the glow is wider than the cup)
@@ -192,6 +231,7 @@ export function initLake(env) {
         f.el.style.opacity = '0';
       }
     });
+    moveDrifters(clock, Math.min(1, clock / 2));
     lampDraw.length = 0;
     lamps.forEach(l => {
       const q = project(l.u, l.v, theta);

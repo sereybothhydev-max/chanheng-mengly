@@ -234,19 +234,22 @@ function downloadICS() {
 // ── 11 · gift card turns in ─────────────────────────────────────────
 function gratitude() {
   if (R) return;
-  const body = document.querySelector('.grat-body');
-  gsap.set(body.querySelectorAll('.rv-word'), { opacity: 0 });
-  gsap.timeline({ scrollTrigger: st('.grat-frame', { start: 'top 80%' }) })
-    .from('.grat-crest', { opacity: 0, y: 14, duration: 1, ease: 'silk' })
-    .fromTo('.grat-title', { clipPath: 'inset(-40% 50% -40% 50%)' }, { clipPath: 'inset(-40% -10% -40% -10%)', duration: 1.3, ease: 'power3.inOut', clearProps: 'clipPath' }, .2)
-    .from('.grat-divider path', { drawSVG: '50% 50%', duration: 1.2, ease: 'power2.inOut' }, .6);
-  ScrollTrigger.create({
-    ...st(body, { start: 'top 85%' }),
-    onEnter: () => {
-      body.dataset.done = 1;
-      gsap.fromTo(body.querySelectorAll('.rv-word'), { opacity: 0, y: 8 },
-        { opacity: 1, y: 0, duration: .8, stagger: .05, ease: 'power2.out', delay: .4 });
-    },
+  document.querySelectorAll('.grat-frame').forEach(frame => {
+    const body = frame.querySelector('.grat-body');
+    gsap.set(body.querySelectorAll('.rv-word'), { opacity: 0 });
+    const tl = gsap.timeline({ scrollTrigger: st(frame, { start: 'top 80%' }) });
+    const crestEl = frame.querySelector('.grat-crest');
+    if (crestEl) tl.from(crestEl, { opacity: 0, y: 14, duration: 1, ease: 'silk' });
+    tl.fromTo(frame.querySelector('.grat-title'), { clipPath: 'inset(-40% 50% -40% 50%)' }, { clipPath: 'inset(-40% -10% -40% -10%)', duration: 1.3, ease: 'power3.inOut', clearProps: 'clipPath' }, .2)
+      .from(frame.querySelectorAll('.grat-divider path'), { drawSVG: '50% 50%', duration: 1.2, ease: 'power2.inOut' }, .6);
+    ScrollTrigger.create({
+      ...st(body, { start: 'top 85%' }),
+      onEnter: () => {
+        body.dataset.done = 1;
+        gsap.fromTo(body.querySelectorAll('.rv-word'), { opacity: 0, y: 8 },
+          { opacity: 1, y: 0, duration: .8, stagger: .05, ease: 'power2.out', delay: .4 });
+      },
+    });
   });
 }
 

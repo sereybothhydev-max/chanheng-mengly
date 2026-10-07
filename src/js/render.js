@@ -271,6 +271,11 @@ export function render() {
         ${divider('grat-divider')}
         <p class="grat-body" data-reveal="lines" data-i18n="gratBody">${t('gratBody')}</p>
       </div>
+      <div class="grat-frame grat-frame--apology">
+        <h2 class="grat-title foil" data-i18n="apologyHeading">${t('apologyHeading')}</h2>
+        ${divider('grat-divider')}
+        <p class="grat-body" data-reveal="lines" data-i18n="apologyBody">${t('apologyBody')}</p>
+      </div>
     </section>
 
     <!-- 12 · THANK YOU -->

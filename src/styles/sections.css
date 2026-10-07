@@ -238,8 +238,8 @@ html[data-lang='en'] .grat-body { font-family: var(--en); font-style: italic; fo
 /* ── 12 · thank you ────────────────────────────────────────────── */
 .s-thanks { overflow: hidden; text-align: center; padding-bottom: calc(72px + env(safe-area-inset-bottom)) !important; }
 .thanks-bg { position: absolute; inset: 0; }
-.thanks-bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.5) saturate(.8); }
-.thanks-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, var(--ink), rgba(18, 20, 11, .4) 30%, rgba(18, 20, 11, .62) 75%, var(--ink)); }
+.thanks-bg img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.75) saturate(.9); }
+.thanks-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, var(--ink), rgba(18, 20, 11, .18) 22%, rgba(18, 20, 11, .42) 72%, var(--ink)); }
 .thanks-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; pointer-events: none; }
 .thanks-inner a, .thanks-inner button { pointer-events: auto; }
 .fireworks { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; touch-action: manipulation; }
@@ -255,7 +255,7 @@ html.lite .candle.lit .c-flame, html.lite .candle.lit .c-flame-in, html.lite .ca
 @keyframes flame { 0% { transform: scale(1, 1) skewX(0); } 40% { transform: scale(.94, 1.06) skewX(2deg); } 100% { transform: scale(1.04, .96) skewX(-2deg); } }
 @keyframes glow { from { transform: scale(.92); opacity: .85; } to { transform: scale(1.08); opacity: 1; } }
 .thanks-title { font-size: clamp(32px, 10vw, 64px); display: inline-block; }
-.thanks-body { max-width: 30em; margin: 0 auto clamp(26px, 5vw, 40px); opacity: .88; }
+.thanks-body { max-width: 30em; margin: 0 auto clamp(26px, 5vw, 40px); opacity: .95; text-shadow: 0 1px 3px rgba(0,0,0,.85), 0 0 14px rgba(0,0,0,.6); }
 .share { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; max-width: 520px; margin: 0 auto; }
 .share-btn {
   display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 14px; border-radius: 14px; text-align: left;

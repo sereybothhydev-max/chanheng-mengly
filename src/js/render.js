@@ -216,7 +216,7 @@ export function render() {
         </div>
         <div class="lake-text">
           <h2 class="sec-title foil" data-i18n="candleHeading">${t('candleHeading')}</h2>
-          <p class="lake-hint"><span class="tap-dot"></span><span data-i18n="candleHint">${t('candleHint')}</span></p>
+          <p class="lake-hint"><span data-i18n="candleHint">${t('candleHint')}</span></p>
         </div>
       </div>
     </section>

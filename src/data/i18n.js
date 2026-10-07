@@ -38,7 +38,7 @@ export const i18n = {
 
 
     candleHeading: 'បណ្តែតប្រទីបជូនពរ',
-    candleHint: 'ប៉ះលើផ្ទៃទឹក ដើម្បីបណ្តែតប្រទីប',
+    candleHint: 'ប្រទីបជូនពរ អណ្តែតនាំក្តីសុខ និងក្តីស្រលាញ់',
 
     galleryHeading: 'កម្រងរូបភាព',
 
@@ -99,7 +99,7 @@ export const i18n = {
 
 
     candleHeading: 'Float a lantern of blessing',
-    candleHint: 'Touch the water to float a lantern',
+    candleHint: 'Lanterns of blessing, carrying happiness and love',
 
     galleryHeading: 'Gallery',
 

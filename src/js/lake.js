@@ -1,8 +1,12 @@
-// Candlelight lake: touching the water makes ripples and floats a lotus lantern.
+// Candlelight lake: lanterns float out on their own (and on touch); each one slowly
+// changes shape — lotus lantern → heart → sparkle → lantern — as it drifts away.
 // The canvas sizes to its parent (ResizeObserver only, never resizes itself in a
 // loop) and only draws while the section is on screen and the tab is visible.
 import gsap from 'gsap';
 import { lotus } from './elements.js';
+
+const HEART_SVG = '<svg class="lt-svg" viewBox="0 0 40 36"><path d="M20 34C8 25 1 18 1 10.5C1 5 5 1 10.2 1C14 1 17.4 3.2 20 6.8C22.6 3.2 26 1 29.8 1C35 1 39 5 39 10.5C39 18 32 25 20 34Z" fill="#d6447f" stroke="#f3dc9c" stroke-width="1.4"/><path d="M8.5 9.5C9.5 6.5 12 5 14.5 5" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.6" stroke-linecap="round"/></svg>';
+const SPARKLE_SVG = '<svg class="lt-svg" viewBox="0 0 40 40"><path d="M20 2C21.4 13 27 18.6 38 20C27 21.4 21.4 27 20 38C18.6 27 13 21.4 2 20C13 18.6 18.6 13 20 2Z" fill="#f3d58a" stroke="#fffaf0" stroke-opacity=".6" stroke-width=".8"/><circle cx="20" cy="20" r="3.4" fill="#fffaf0"/><path d="M9 8c3 0 4.5 2.4 4 5c-2.8 0-4.6-2-4-5zM31 32c-3 0-4.5-2.4-4-5c2.8 0 4.6 2 4 5z" fill="#e2558d" opacity=".85"/></svg>';
 
 export function initLake(env) {
   const water = document.querySelector('.lake-water');
@@ -24,12 +28,20 @@ export function initLake(env) {
 
   const add = (x, y, strength = 1) => ripples.push({ x, y, r: 2, a: .55 * strength, v: 38 + 20 * strength });
 
-  let last = performance.now(), ambient = 0;
+  let last = performance.now(), ambient = 0, autoT = .4, count = 0;
   const frame = now => {
     raf = 0;
     if (!visible || document.hidden) return; // check visibility every frame
     const dt = Math.min(.05, (now - last) / 1000); last = now;
     ambient -= dt;
+    autoT -= dt;
+    if (autoT <= 0 && w) { // launch a lantern by itself — no touch needed
+      autoT = env.lite ? 3.2 : 1.6 + Math.random() * 1.2;
+      const x = w * (.08 + Math.random() * .84), y = h * (.5 + Math.random() * .42);
+      add(x, y, .8);
+      if (holder.children.length >= (env.lite ? 6 : 10)) holder.firstElementChild.remove();
+      floatLantern(x, y, count++);
+    }
     if (ambient <= 0) { add(Math.random() * w, h * (.15 + Math.random() * .7), .45); ambient = env.lite ? 4 : 2.2 + Math.random() * 1.6; }
     ctx.clearRect(0, 0, w, h);
     for (let i = ripples.length - 1; i >= 0; i--) {
@@ -52,10 +64,29 @@ export function initLake(env) {
   };
   const start = () => { if (!raf && visible) { last = performance.now(); raf = requestAnimationFrame(frame); } };
 
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; start(); }).observe(water);
+  let welcomed = false;
+  new IntersectionObserver(([e]) => {
+    visible = e.isIntersecting;
+    // first time the lake comes into view: three lanterns set off straight away
+    if (visible && !welcomed && !env.reduced && w) {
+      welcomed = true;
+      [[.22, .66], [.52, .84], [.8, .62]].forEach(([fx, fy], i) =>
+        setTimeout(() => { add(w * fx, h * fy, .8); floatLantern(w * fx, h * fy, count++); }, 150 + i * 450));
+      autoT = 2.2;
+    }
+    start();
+  }).observe(water);
+  if (env.reduced) {
+    requestAnimationFrame(() => [[.25, .62], [.55, .78], [.78, .58]].forEach(([fx, fy], i) => {
+      const el = document.createElement('div');
+      el.className = 'lantern is-still';
+      el.innerHTML = `<div class="lt-inner"><span class="lt-glow"></span><span class="lt-shape lt-shape--lantern">${lotus()}<span class="lt-flame"></span></span></div>`;
+      el.style.left = fx * 100 + '%'; el.style.top = fy * 100 + '%';
+      holder.appendChild(el);
+    }));
+  }
   document.addEventListener('visibilitychange', start);
 
-  let count = 0;
   water.addEventListener('pointerdown', e => {
     const r = water.getBoundingClientRect();
     const x = e.clientX - r.left, y = e.clientY - r.top;
@@ -68,7 +99,12 @@ export function initLake(env) {
   function floatLantern(x, y, i) {
     const el = document.createElement('div');
     el.className = 'lantern';
-    el.innerHTML = `<div class="lt-inner"><span class="lt-glow"></span>${lotus()}<span class="lt-flame"></span></div>`;
+    // three stacked shapes take turns (CSS @keyframes ltMorph); a random phase per lantern
+    el.style.setProperty('--lt-phase', `${(-Math.random() * 9).toFixed(1)}s`);
+    el.innerHTML = `<div class="lt-inner"><span class="lt-glow"></span>
+      <span class="lt-shape lt-shape--lantern">${lotus()}<span class="lt-flame"></span></span>
+      <span class="lt-shape lt-shape--heart">${HEART_SVG}</span>
+      <span class="lt-shape lt-shape--sparkle">${SPARKLE_SVG}</span></div>`;
     el.style.left = x + 'px'; el.style.top = y + 'px';
     holder.appendChild(el);
     const inner = el.firstElementChild;

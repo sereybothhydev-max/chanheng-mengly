@@ -1,0 +1,421 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Tailwind CSS v4 — configuration lives right here in CSS (no tailwind.config.js).
+   Every token in @theme becomes a utility class automatically:
+     --color-gold-500   → bg-gold-500, text-gold-500, border-gold-500 …
+     --font-display     → font-display
+     --animate-fade-up  → animate-fade-up
+   ═══════════════════════════════════════════════════════════════════════════ */
+@import "tailwindcss";
+
+/* Fonts are loaded in layout.tsx with next/font and exposed as CSS variables. */
+@theme inline {
+  /* font-moul    → traditional Khmer display (names, big headings)
+     font-display → modern Khmer for section headings
+     font-latin   → elegant italic serif for "&" and the hashtag */
+  --font-moul: var(--font-moul-face), "Khmer OS Muol Light", serif;
+  --font-display: var(--font-kantumruy), "Khmer OS Battambang", sans-serif;
+  --font-sans: var(--font-kantumruy), "Khmer OS System", "Leelawadee UI", sans-serif;
+  --font-latin: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+}
+
+@theme {
+  /* ── Palette: ivory paper, blush, champagne, antique gold, a hint of sage ── */
+  --color-ivory: #fbf7f2;
+  --color-ink: #3b3330;
+  --color-ink-soft: #75675f;
+
+  --color-blush-50: #fdf6f4;
+  --color-blush-100: #fae9e5;
+  --color-blush-200: #f4d4cc;
+  --color-blush-300: #ebb7aa;
+  --color-blush-400: #dc9483;
+
+  --color-champagne-50: #fcf8f1;
+  --color-champagne-100: #f7efe2;
+  --color-champagne-200: #efdfc7;
+
+  --color-gold-200: #efdfb9;
+  --color-gold-300: #e2c78f;
+  --color-gold-400: #cfad6b;
+  --color-gold-500: #b8924f;
+  --color-gold-600: #98753c;
+  --color-gold-700: #775a2e;
+
+  --color-sage-200: #dfe6d8;
+  --color-forest-300: #8aa572;
+  --color-forest-400: #6f9459;
+  --color-forest-500: #4f6b42;
+  --color-sage-400: #a7b799;
+
+  /* ── Motion ── */
+  --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-fade-up: fade-up 0.9s var(--ease-silk) both;
+  --animate-fade-in: fade-in 0.35s ease-out both;
+  --animate-zoom-in: zoom-in 0.5s var(--ease-silk) both;
+  --animate-float: float 16s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.8s linear infinite;
+  --animate-gold-sheen: gold-sheen 6s ease-in-out infinite;
+  --animate-heart-pop: heart-pop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-live-pulse: live-pulse 2s ease-out infinite;
+  --animate-petal: petal-fall 22s linear infinite;
+  --animate-sheet-up: sheet-up 0.38s var(--ease-silk) both;
+  --animate-music-bar: music-bar 0.9s ease-in-out infinite alternate;
+}
+
+/* Keyframes (kept outside @theme so they're always emitted) */
+/* Lets the browser animate the frame's light smoothly around the border */
+@property --frame-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes frame-spin {
+  to { --frame-angle: 360deg; }
+}
+/* A soft band of light glides across the gold camera in a continuous loop */
+@keyframes camera-shimmer {
+  from { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes zoom-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(2%, -3%, 0) scale(1.06); }
+}
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+@keyframes gold-sheen {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+@keyframes music-bar {
+  from { transform: scaleY(0.3); }
+  to   { transform: scaleY(1); }
+}
+@keyframes sheet-up {
+  from { transform: translateY(40px); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+@keyframes heart-pop {
+  0%   { opacity: 0; transform: scale(0.3) rotate(-8deg); }
+  60%  { opacity: 1; transform: scale(1.12) rotate(4deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes live-pulse {
+  0%   { box-shadow: 0 0 0 0 rgb(220 148 131 / 0.55); }
+  100% { box-shadow: 0 0 0 10px rgb(220 148 131 / 0); }
+}
+@keyframes petal-fall {
+  0%   { transform: translate3d(0, -12vh, 0) rotate(0deg); opacity: 0; }
+  8%   { opacity: 0.9; }
+  92%  { opacity: 0.9; }
+  100% { transform: translate3d(70px, 112vh, 0) rotate(540deg); opacity: 0; }
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-ivory);
+    min-height: 100dvh;
+  }
+  /* Soft watercolor wash behind everything. A fixed pseudo-element is used
+     instead of background-attachment:fixed, which stutters on iOS. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(60rem 40rem at 8% -12%, rgb(244 212 204 / 0.6), transparent 60%),
+      radial-gradient(50rem 36rem at 108% 6%, rgb(239 223 199 / 0.75), transparent 62%),
+      radial-gradient(44rem 30rem at 50% 112%, rgb(223 230 216 / 0.55), transparent 60%);
+  }
+  ::selection {
+    background: var(--color-gold-200);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold-400);
+    outline-offset: 3px;
+  }
+}
+
+/* ── Photo backdrop for the guest page ────────────────────────────────────────
+   Your photo lives at public/background.jpg — replace that file to change it.
+   The two gradients on top dim it ("low light") so text stays readable:
+   raise the 0.46–0.64 numbers to make it darker, lower them to make it brighter.
+   background-position 40% keeps the bride in view on narrow phone screens. */
+.photo-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -20;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 50% 40%, rgb(20 15 11 / 0) 40%, rgb(20 15 11 / 0.35) 100%),
+    linear-gradient(180deg, rgb(20 15 11 / 0.58) 0%, rgb(20 15 11 / 0.46) 45%, rgb(20 15 11 / 0.64) 100%),
+    url("/background.jpg") 40% center / cover no-repeat;
+}
+@media (min-width: 768px) {
+  .photo-backdrop { background-position: center, center, center 45%; }
+}
+/* The soft watercolour wash is only for pages without the photo (e.g. /admin). */
+body:has(.photo-backdrop)::before { display: none; }
+
+/* ── Reusable design utilities ────────────────────────────────────────────── */
+
+/* Shimmering gold foil text */
+@utility text-gold {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-gold-600) 0%,
+    var(--color-gold-400) 28%,
+    var(--color-gold-300) 50%,
+    var(--color-gold-400) 72%,
+    var(--color-gold-600) 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Brighter gold foil for text sitting on the dark photo */
+@utility text-gold-light {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-gold-400) 0%,
+    var(--color-gold-200) 30%,
+    #fff6e3 50%,
+    var(--color-gold-200) 70%,
+    var(--color-gold-400) 100%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 14px rgb(0 0 0 / 0.4));
+}
+
+/* Soft shadow so light text stays crisp over busy parts of the photo */
+@utility shadow-text {
+  text-shadow: 0 1px 10px rgb(0 0 0 / 0.35);
+}
+
+/* Frosted card with a hairline gold border */
+@utility glass-card {
+  background: rgb(255 255 255 / 0.86);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  backdrop-filter: blur(18px) saturate(1.2);
+  border: 1px solid rgb(207 173 107 / 0.28);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.85),
+    0 24px 60px -30px rgb(119 90 46 / 0.4);
+}
+
+/* Upload card: fully transparent with a green border and a light-gold glow
+   that slowly travels around it. The glow is a rotating conic gradient,
+   masked so it only shows on the 2px border ring. Text gets a soft shadow so
+   it stays readable directly on the photo. */
+@utility frame-card {
+  color: var(--color-ivory);
+  background: transparent;
+  border: 2px solid var(--color-forest-400);
+  box-shadow:
+    0 0 0 1px rgb(111 148 89 / 0.25),
+    0 0 24px rgb(226 199 143 / 0.16);
+  text-shadow: 0 1px 10px rgb(0 0 0 / 0.6);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--frame-angle),
+      transparent 0deg,
+      var(--color-gold-300) 30deg,
+      #fff6e3 50deg,
+      var(--color-gold-300) 70deg,
+      transparent 105deg,
+      transparent 180deg,
+      rgb(239 223 185 / 0.55) 215deg,
+      transparent 250deg,
+      transparent 360deg
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: frame-spin 6s linear infinite;
+  }
+  & .eyebrow { color: var(--color-gold-300); }
+  & .field { text-shadow: none; }
+  & .btn-ghost {
+    background: rgb(255 255 255 / 0.08);
+    color: var(--color-ivory);
+    border-color: rgb(226 199 143 / 0.55);
+  }
+  & .btn-ghost:hover { background: rgb(255 255 255 / 0.16); }
+}
+
+/* Shimmering light-gold camera illustration on the upload card.
+   Smoothness: the light is a wide gradient strip that slides sideways with
+   `transform` (handled by the phone's graphics chip, no repainting) and the
+   strip repeats seamlessly, so the loop never jumps. The shadow is a separate,
+   still layer so it never has to be redrawn while the light moves. */
+.camera-art {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  aspect-ratio: 640 / 444;
+}
+.camera-art-shadow {
+  position: absolute;
+  inset: 0;
+  transform: translateY(4px);
+  filter: blur(5px);
+}
+.camera-art-shadow i,
+.camera-art-lines {
+  position: absolute;
+  inset: 0;
+  -webkit-mask: url("/camera-lines.webp") center / 100% 100% no-repeat;
+  mask: url("/camera-lines.webp") center / 100% 100% no-repeat;
+}
+.camera-art-shadow i { background: rgb(0 0 0 / 0.6); }
+.camera-art-lines {
+  overflow: hidden;
+  isolation: isolate;
+}
+.camera-art-lines::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  /* One tile = one camera width; both ends are the same gold so tiles join invisibly. */
+  background: linear-gradient(
+      110deg,
+      var(--color-gold-300) 0%,
+      var(--color-gold-300) 20%,
+      var(--color-gold-200) 33%,
+      #fff6e3 44%,
+      #fffdf8 50%,
+      #fff6e3 56%,
+      var(--color-gold-200) 67%,
+      var(--color-gold-300) 80%,
+      var(--color-gold-300) 100%
+    )
+    0 0 / 50% 100% repeat-x;
+  will-change: transform;
+  animation: camera-shimmer 5s linear infinite;
+}
+.camera-art-flowers {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 10px rgb(0 0 0 / 0.35));
+}
+
+/* Primary call-to-action */
+@utility btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 9999px;
+  padding: 1rem 1.75rem;
+  font-weight: 500;
+  color: #fff;
+  background-image: linear-gradient(135deg, var(--color-gold-400), var(--color-gold-600));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.35),
+    0 12px 30px -12px rgb(152 117 60 / 0.75);
+  transition: transform 0.2s var(--ease-silk), box-shadow 0.2s, filter 0.2s;
+  &:hover { filter: brightness(1.06); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 16px 34px -12px rgb(152 117 60 / 0.85); }
+  &:active { transform: scale(0.97); }
+  &:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+}
+
+/* Quiet secondary button */
+@utility btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.65rem 1.2rem;
+  font-size: 0.9rem;
+  color: var(--color-gold-700);
+  border: 1px solid rgb(207 173 107 / 0.45);
+  background: rgb(255 255 255 / 0.6);
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  &:hover { background: #fff; border-color: var(--color-gold-400); }
+  &:active { transform: scale(0.97); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+/* Form fields */
+@utility field {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid rgb(207 173 107 / 0.35);
+  background: rgb(255 255 255 / 0.8);
+  padding: 0.85rem 1rem;
+  font-size: 1rem; /* ≥16px stops iOS zooming into the field */
+  color: var(--color-ink);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  &::placeholder { color: rgb(117 103 95 / 0.6); }
+  &:focus { outline: none; border-color: var(--color-gold-400); box-shadow: 0 0 0 4px rgb(226 199 143 / 0.35); }
+}
+
+/* Loading placeholder for gallery tiles */
+@utility skeleton {
+  background-image: linear-gradient(
+    110deg,
+    var(--color-blush-100) 30%,
+    var(--color-champagne-100) 50%,
+    var(--color-blush-100) 70%
+  );
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* Small gold labels. Khmer has no capitals and letter-spacing breaks its
+   stacked consonants, so we use size and colour instead. */
+@utility eyebrow {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--color-gold-600);
+}
+
+/* Respect people who've asked their device for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .petal { display: none; }
+}

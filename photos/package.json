@@ -1,0 +1,30 @@
+{
+  "name": "wedding-photos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "QR-code wedding photo & video sharing app — Next.js + Supabase",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "qr": "node scripts/make-qr.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.117.3",
+    "client-zip": "^2.5.1",
+    "next": "^16.4.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "qrcode": "^1.5.4",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5"
+  }
+}

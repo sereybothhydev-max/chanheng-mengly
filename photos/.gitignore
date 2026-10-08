@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+*.tsbuildinfo
+next-env.d.ts
+
+# secrets — never commit these
+.env
+.env.local
+.env.*.local
+
+# generated QR codes
+qr/
+
+.DS_Store
+.vercel

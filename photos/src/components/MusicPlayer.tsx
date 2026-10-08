@@ -3,10 +3,12 @@
 /**
  * Background music for the guest page (public/music.mp3).
  *
- * Phones and browsers never allow sound to start by itself, so the song
- * starts softly on the guest's FIRST tap anywhere on the page. A small gold
- * button in the corner lets anyone pause or resume it, and that choice is
- * remembered on their phone.
+ * Opening the page, we TRY to start the music straight away. Browsers allow
+ * that only sometimes (mostly computers that have visited before); phones
+ * block sound until the guest touches the screen. When blocked, a short
+ * welcome screen with a "tap to enter" button appears — that one tap opens
+ * the site AND starts the song. A small gold button in the corner lets anyone
+ * pause or resume it, and that choice is remembered on their phone.
  *
  * Polite touches:
  *  - fades in gently instead of starting loud
@@ -14,6 +16,8 @@
  *  - pauses while a guest video is playing in the lightbox, resumes after
  */
 import { useEffect, useRef, useState } from "react";
+import { WEDDING } from "@/lib/config";
+import { Ornament } from "./Ornament";
 
 const SRC = "/music.mp3";
 const TARGET_VOLUME = 0.6;
@@ -24,12 +28,14 @@ export function MusicPlayer() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [playing, setPlaying] = useState(false);
   const [started, setStarted] = useState(false); // has it ever played?
+  const [welcome, setWelcome] = useState<"hidden" | "shown" | "leaving">("hidden");
   const resumeAfter = useRef(false); // paused by us (tab hidden / video), not by the guest
 
-  /** Start (or resume) with a gentle 2-second fade-in. */
-  const play = async () => {
+  /** Start (or resume) with a gentle 2-second fade-in. Resolves true if it plays. */
+  const play = async (): Promise<boolean> => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio) return false;
+    if (!audio.paused) return true; // already playing — don't restart the fade
     try {
       audio.volume = 0;
       await audio.play();
@@ -40,12 +46,21 @@ export function MusicPlayer() {
         if (k < 1 && !audio.paused) requestAnimationFrame(step);
       };
       requestAnimationFrame(step);
+      return true;
     } catch {
-      /* blocked until a real tap — the button still works */
+      return false; // blocked until a real tap
     }
   };
 
-  // First tap anywhere starts the music — unless this guest turned it off before.
+  function enter() {
+    void play();
+    setWelcome("leaving");
+    setTimeout(() => setWelcome("hidden"), 600);
+  }
+
+  // On open: try to autoplay; if the browser blocks it, show the welcome screen.
+  // Also start on the first real tap anywhere (click / touchend / key — the
+  // events phones count as a "user gesture"; pointerdown on touch does not).
   useEffect(() => {
     let off = false;
     try {
@@ -55,17 +70,21 @@ export function MusicPlayer() {
     }
     if (off) return;
 
+    let cancelled = false;
+    void play().then((ok) => {
+      if (!ok && !cancelled && audioRef.current?.paused) setWelcome("shown");
+    });
+
+    const events = ["click", "touchend", "keydown"] as const;
     const onFirstTap = (e: Event) => {
       if (buttonRef.current?.contains(e.target as Node)) return; // the button handles itself
-      window.removeEventListener("pointerdown", onFirstTap, true);
-      window.removeEventListener("keydown", onFirstTap, true);
-      void play();
+      events.forEach((ev) => window.removeEventListener(ev, onFirstTap, true));
+      if (audioRef.current?.paused) void play();
     };
-    window.addEventListener("pointerdown", onFirstTap, true);
-    window.addEventListener("keydown", onFirstTap, true);
+    events.forEach((ev) => window.addEventListener(ev, onFirstTap, true));
     return () => {
-      window.removeEventListener("pointerdown", onFirstTap, true);
-      window.removeEventListener("keydown", onFirstTap, true);
+      cancelled = true;
+      events.forEach((ev) => window.removeEventListener(ev, onFirstTap, true));
     };
   }, []);
 
@@ -153,13 +172,52 @@ export function MusicPlayer() {
         ref={audioRef}
         src={SRC}
         loop
-        preload="none"
+        preload="auto"
         onPlay={() => {
           setPlaying(true);
           setStarted(true);
+          setWelcome((w) => (w === "shown" ? "leaving" : w));
         }}
         onPause={() => setPlaying(false)}
       />
+
+      {/* Welcome screen — only when the browser blocked autoplay. One tap = enter + music. */}
+      {welcome !== "hidden" && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="សូមស្វាគមន៍"
+          onClick={enter}
+          className={`fixed inset-0 z-[60] flex flex-col items-center justify-center bg-[#140f0b]/70 px-6 text-center backdrop-blur-md transition-opacity duration-500 ${
+            welcome === "leaving" ? "pointer-events-none opacity-0" : "animate-fade-in opacity-100"
+          }`}
+        >
+          <p className="eyebrow !text-gold-300">សូមស្វាគមន៍មកកាន់ពិធីមង្គលការរបស់</p>
+          <h2 className="mt-3 font-moul text-[1.7rem] leading-[1.6] sm:text-4xl">
+            {WEDDING.coupleNames.split(/\s*(?:និង|&)\s*/).map((n, i) => (
+              <span key={i} className="block">
+                {i > 0 && <span className="block font-sans text-base text-blush-200">និង</span>}
+                <span className="text-gold-light">{n}</span>
+              </span>
+            ))}
+          </h2>
+          <Ornament className="mx-auto mt-5 h-5 w-44 text-gold-400" />
+          <p className="shadow-text mt-3 text-sm text-ivory/85">{WEDDING.dateLabel}</p>
+          <button
+            type="button"
+            autoFocus
+            onClick={(e) => {
+              e.stopPropagation();
+              enter();
+            }}
+            className="btn-gold mt-8 w-full max-w-xs !py-4 text-[1.05rem]"
+          >
+            <NoteIcon />
+            ចុចដើម្បីចូល
+          </button>
+          <p className="mt-3 text-xs text-ivory/60">♪ តន្ត្រីនឹងចាប់ផ្តើម</p>
+        </div>
+      )}
 
       <div className="fixed right-4 bottom-[calc(env(safe-area-inset-bottom)+1rem)] z-40 flex items-center gap-2">
         {!started && (

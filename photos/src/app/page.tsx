@@ -16,7 +16,9 @@ export default function HomePage() {
   return (
     <main className="relative min-h-dvh overflow-x-clip pb-16">
       {/* The couple's photo, dimmed (see .photo-backdrop in globals.css) + drifting petals */}
-      <div aria-hidden className="photo-backdrop" />
+      <div aria-hidden className="photo-backdrop">
+        <div className="photo-dim" />
+      </div>
       <Petals />
       {/* Background music (public/music.mp3) — starts on the first tap */}
       <MusicPlayer />

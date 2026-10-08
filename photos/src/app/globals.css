@@ -159,22 +159,68 @@
 }
 
 /* ── Photo backdrop for the guest page ────────────────────────────────────────
-   Your photo lives at public/background.jpg — replace that file to change it.
-   The two gradients on top dim it ("low light") so text stays readable:
-   raise the 0.46–0.64 numbers to make it darker, lower them to make it brighter.
-   background-position 40% keeps the bride in view on narrow phone screens. */
+   Your photo lives at public/background.jpg — replace that file to change it
+   (a landscape photo, 3:2, works best; if yours has another shape, change the
+   two "aspect-ratio: 3 / 2" values below to match it).
+
+   It adapts to every screen:
+   • Wide screens (laptop, desktop, TV, iPad sideways): the photo fills the screen.
+   • Tall screens (phones, iPad upright): the WHOLE photo is shown, never cut
+     off, with a soft blurred copy of it filling the space above and below.
+
+   Layers, back to front:  blurred copy (::before) → sharp photo (::after) →
+   .photo-dim, the dark overlay that keeps text readable. To make the page
+   darker raise the 0.46–0.64 numbers in .photo-dim; lower them to brighten. */
 .photo-backdrop {
   position: fixed;
   inset: 0;
   z-index: -20;
   pointer-events: none;
+  overflow: hidden;
+  background: #1b1612;
+}
+.photo-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: -60px;
+  z-index: 0;
+  background: url("/background.jpg") center / cover no-repeat;
+  filter: blur(30px) saturate(1.15);
+  opacity: 0.8;
+}
+.photo-backdrop::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 42%;
+  transform: translateY(-42%);
+  aspect-ratio: 3 / 2;
+  background: url("/background.jpg") center / cover no-repeat;
+  /* feather the top and bottom edges into the blurred copy */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+}
+.photo-dim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   background:
     radial-gradient(120% 90% at 50% 40%, rgb(20 15 11 / 0) 40%, rgb(20 15 11 / 0.35) 100%),
-    linear-gradient(180deg, rgb(20 15 11 / 0.58) 0%, rgb(20 15 11 / 0.46) 45%, rgb(20 15 11 / 0.64) 100%),
-    url("/background.jpg") 40% center / cover no-repeat;
+    linear-gradient(180deg, rgb(20 15 11 / 0.58) 0%, rgb(20 15 11 / 0.46) 45%, rgb(20 15 11 / 0.64) 100%);
 }
-@media (min-width: 768px) {
-  .photo-backdrop { background-position: center, center, center 45%; }
+/* Screen at least about as wide as the photo: just fill it. */
+@media (min-aspect-ratio: 5 / 4) {
+  .photo-backdrop::before { display: none; }
+  .photo-backdrop::after {
+    inset: 0;
+    transform: none;
+    aspect-ratio: auto;
+    background-position: center 45%;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
 }
 /* The soft watercolour wash is only for pages without the photo (e.g. /admin). */
 body:has(.photo-backdrop)::before { display: none; }

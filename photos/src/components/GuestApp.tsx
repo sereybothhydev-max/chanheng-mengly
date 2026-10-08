@@ -21,6 +21,7 @@ export function GuestApp() {
           hasMore={feed.hasMore}
           loadingMore={feed.loadingMore}
           onLoadMore={feed.loadMore}
+          onDeleted={feed.removeItems}
         />
       </section>
     </>

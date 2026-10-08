@@ -9,6 +9,7 @@
  */
 import { NextResponse } from "next/server";
 import { STORAGE_BUCKET, UPLOAD_LIMITS } from "@/lib/config";
+import { ownerToken } from "@/lib/owner-token";
 import { mapPool } from "@/lib/pool";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { cleanText, kindOf } from "@/lib/validation";
@@ -98,7 +99,9 @@ export async function POST(req: Request) {
       .select();
     if (error) throw error;
 
-    return NextResponse.json({ items: data ?? [] });
+    // One owner key per new item, so this guest's phone can delete it later.
+    const tokens = Object.fromEntries((data ?? []).map((row) => [row.id as string, ownerToken(row.id as string)]));
+    return NextResponse.json({ items: data ?? [], tokens });
   } catch (err) {
     console.error("[upload/complete]", err);
     return NextResponse.json(

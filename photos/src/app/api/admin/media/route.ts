@@ -5,7 +5,7 @@
  */
 import { NextResponse } from "next/server";
 import { isAdmin } from "@/lib/admin-auth";
-import { STORAGE_BUCKET } from "@/lib/config";
+import { deleteMediaByIds } from "@/lib/media-delete";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import type { MediaItem } from "@/lib/types";
 
@@ -50,25 +50,8 @@ export async function DELETE(req: Request) {
   if (validIds.length === 0) return NextResponse.json({ error: "មិនទាន់បានជ្រើសអ្វីទេ។" }, { status: 400 });
 
   try {
-    const supabase = getSupabaseAdmin();
-
-    const { data: rows, error: selectError } = await supabase
-      .from("media")
-      .select("id, storage_path, thumb_path")
-      .in("id", validIds);
-    if (selectError) throw selectError;
-
-    const paths = (rows ?? []).flatMap((r) => [r.storage_path, r.thumb_path]).filter(Boolean) as string[];
-    if (paths.length) {
-      const { error: storageError } = await supabase.storage.from(STORAGE_BUCKET).remove(paths);
-      if (storageError) throw storageError;
-    }
-
-    // Deleting the rows also removes them live from every guest's gallery.
-    const { error: deleteError } = await supabase.from("media").delete().in("id", validIds);
-    if (deleteError) throw deleteError;
-
-    return NextResponse.json({ deleted: rows?.length ?? 0 });
+    const deleted = await deleteMediaByIds(validIds);
+    return NextResponse.json({ deleted: deleted.length });
   } catch (err) {
     console.error("[admin/media DELETE]", err);
     return NextResponse.json({ error: "លុបមិនបានសម្រេច — សូមព្យាយាមម្តងទៀត។" }, { status: 500 });

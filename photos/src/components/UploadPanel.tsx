@@ -16,6 +16,7 @@ import { UPLOAD_LIMITS } from "@/lib/config";
 import type { MediaItem, SignedUpload } from "@/lib/types";
 import { makeImageThumbnail, putWithProgress, requestWakeLock, runPool } from "@/lib/upload-client";
 import { kn } from "@/lib/khmer";
+import { rememberMyUploads } from "@/lib/my-uploads";
 import { SourceSheet, type Source } from "./SourceSheet";
 import { formatBytes, validateFile, type MediaKind } from "@/lib/validation";
 
@@ -229,8 +230,13 @@ export function UploadPanel({ onUploaded }: { onUploaded: (items: MediaItem[]) =
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ items: succeeded, message }),
         });
-        const json = (await res.json().catch(() => ({}))) as { items?: MediaItem[]; error?: string };
+        const json = (await res.json().catch(() => ({}))) as {
+          items?: MediaItem[];
+          tokens?: Record<string, string>;
+          error?: string;
+        };
         if (!res.ok) throw new Error(json.error ?? "មិនអាចបន្ថែមឯកសាររបស់អ្នកទៅវិចិត្រសាលបានទេ។");
+        if (json.tokens) rememberMyUploads(json.tokens); // lets this phone delete them later
         onUploaded(json.items ?? []);
       }
 

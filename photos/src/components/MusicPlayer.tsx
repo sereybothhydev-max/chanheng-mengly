@@ -215,7 +215,6 @@ export function MusicPlayer() {
             <NoteIcon />
             ចុចដើម្បីចូល
           </button>
-          <p className="mt-3 text-xs text-ivory/60">♪ តន្ត្រីនឹងចាប់ផ្តើម</p>
         </div>
       )}
 

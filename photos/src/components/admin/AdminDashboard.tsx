@@ -31,6 +31,8 @@ export function AdminDashboard() {
   const [busy, setBusy] = useState(false);
   const [download, setDownload] = useState<{ done: number; total: number } | null>(null);
   const [notice, setNotice] = useState("");
+  /** Items waiting for the "are you sure?" step in the bottom bar. */
+  const [pending, setPending] = useState<string[] | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -80,12 +82,15 @@ export function AdminDashboard() {
     });
   }
 
-  async function deleteItems(ids: string[]) {
+  /** Step 1: ask for confirmation in the bottom bar. */
+  function deleteItems(ids: string[]) {
+    if (ids.length) setPending(ids);
+  }
+
+  /** Step 2: really delete (after "លុប" is pressed in the confirm bar). */
+  async function confirmDelete() {
+    const ids = pending ?? [];
     if (!ids.length) return;
-    const ok = window.confirm(
-      `លុប ${kn(ids.length)} ជាអចិន្ត្រៃយ៍?\nវានឹងបាត់ពីភ្ញៀវទាំងអស់ ហើយមិនអាចយកមកវិញបានទេ។`,
-    );
-    if (!ok) return;
     setBusy(true);
     const res = await fetch("/api/admin/media", {
       method: "DELETE",
@@ -94,6 +99,7 @@ export function AdminDashboard() {
     });
     setBusy(false);
     if (res.status === 401) return router.refresh();
+    if (!res.ok) setPending(null);
     if (!res.ok) {
       const json = (await res.json().catch(() => ({}))) as { error?: string };
       return setNotice(json.error ?? "លុបមិនបានសម្រេច។");
@@ -101,6 +107,7 @@ export function AdminDashboard() {
     const gone = new Set(ids);
     setItems((prev) => prev.filter((i) => !gone.has(i.id)));
     setSelected(new Set());
+    setPending(null);
     if (openId && gone.has(openId)) setOpenId(null);
     setNotice(`បានលុប ${kn(ids.length)}។`);
   }
@@ -130,7 +137,7 @@ export function AdminDashboard() {
   const selectedItems = items.filter((i) => selected.has(i.id));
 
   return (
-    <main className="mx-auto max-w-7xl px-4 pt-8 pb-24 sm:px-6">
+    <main className="mx-auto max-w-7xl px-4 pt-8 pb-44 sm:px-6">
       {/* Header */}
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
@@ -169,33 +176,13 @@ export function AdminDashboard() {
         </div>
 
         <div className="ml-auto flex flex-wrap items-center gap-2">
-          {selected.size > 0 ? (
-            <>
-              <span className="text-sm text-ink-soft">បានជ្រើស {kn(selected.size)}</span>
-              <button type="button" className="btn-ghost" onClick={() => setSelected(new Set())}>សម្អាត</button>
-              <button type="button" className="btn-ghost" disabled={!!download} onClick={() => downloadItems(selectedItems, "selection")}>
-                ទាញយកដែលបានជ្រើស
-              </button>
-              <button
-                type="button"
-                disabled={busy}
-                onClick={() => deleteItems([...selected])}
-                className="btn-ghost !border-[#d9a69a] !text-[#9a4b3c] hover:!bg-blush-50"
-              >
-                លុបដែលបានជ្រើស
-              </button>
-            </>
-          ) : (
-            <>
-              <button type="button" className="btn-ghost" onClick={() => setSelected(new Set(visible.map((i) => i.id)))} disabled={!visible.length}>
-                ជ្រើសទាំងអស់
-              </button>
-              <button type="button" className="btn-ghost" onClick={() => void load()}>ផ្ទុកឡើងវិញ</button>
-              <button type="button" className="btn-gold !px-5 !py-2.5 text-sm" disabled={!items.length || !!download} onClick={() => downloadItems(items, "all")}>
-                ទាញយកទាំងអស់ ({kn(items.length)})
-              </button>
-            </>
-          )}
+          <button type="button" className="btn-ghost" onClick={() => setSelected(new Set(visible.map((i) => i.id)))} disabled={!visible.length}>
+            ជ្រើសទាំងអស់
+          </button>
+          <button type="button" className="btn-ghost" onClick={() => void load()}>ផ្ទុកឡើងវិញ</button>
+          <button type="button" className="btn-gold !px-5 !py-2.5 text-sm" disabled={!items.length || !!download} onClick={() => downloadItems(items, "all")}>
+            ទាញយកទាំងអស់ ({kn(items.length)})
+          </button>
         </div>
 
         {download && (
@@ -286,6 +273,72 @@ export function AdminDashboard() {
         </ul>
       )}
 
+
+      {/* Bottom action bar: appears when photos are selected (or a delete needs confirming) */}
+      {(selected.size > 0 || pending) && (
+        <div className="fixed inset-x-0 bottom-0 z-40 animate-sheet-up px-3 pb-[max(env(safe-area-inset-bottom),0.75rem)]">
+          <div className="mx-auto flex max-w-4xl flex-wrap items-center gap-2 rounded-2xl border border-gold-300/50 bg-white/95 p-3 shadow-[0_20px_50px_-20px_rgb(0_0_0/0.45)] backdrop-blur-md">
+            {pending ? (
+              <>
+                <p className="min-w-0 flex-1 text-sm text-ink">
+                  លុប <b className="font-medium">{kn(pending.length)}</b> ជាអចិន្ត្រៃយ៍?{" "}
+                  <span className="text-ink-soft">វានឹងបាត់ពីភ្ញៀវទាំងអស់ ហើយមិនអាចយកមកវិញបានទេ។</span>
+                </p>
+                <button type="button" className="btn-ghost" onClick={() => setPending(null)} disabled={busy}>
+                  កុំលុប
+                </button>
+                <button
+                  type="button"
+                  onClick={confirmDelete}
+                  disabled={busy}
+                  className="inline-flex items-center gap-2 rounded-full bg-[#b5503e] px-5 py-2.5 text-sm font-medium text-white shadow transition active:scale-95 disabled:opacity-60"
+                >
+                  <TrashIcon />
+                  {busy ? "កំពុងលុប…" : `លុប ${kn(pending.length)}`}
+                </button>
+              </>
+            ) : (
+              <>
+                <p className="min-w-0 flex-1 text-sm text-ink">
+                  បានជ្រើស <b className="font-medium text-gold-700">{kn(selected.size)}</b>
+                </p>
+                <button
+                  type="button"
+                  className="btn-ghost"
+                  onClick={() =>
+                    setSelected(
+                      visible.every((i) => selected.has(i.id)) ? new Set() : new Set(visible.map((i) => i.id)),
+                    )
+                  }
+                >
+                  {visible.every((i) => selected.has(i.id)) ? "ដោះការជ្រើសទាំងអស់" : `ជ្រើសទាំងអស់ (${kn(visible.length)})`}
+                </button>
+                <button type="button" className="btn-ghost" onClick={() => setSelected(new Set())}>
+                  សម្អាត
+                </button>
+                <button
+                  type="button"
+                  className="btn-ghost"
+                  disabled={!!download}
+                  onClick={() => downloadItems(selectedItems, "selection")}
+                >
+                  ទាញយក ({kn(selected.size)})
+                </button>
+                <button
+                  type="button"
+                  disabled={busy}
+                  onClick={() => deleteItems([...selected])}
+                  className="inline-flex items-center gap-2 rounded-full bg-[#b5503e] px-5 py-2.5 text-sm font-medium text-white shadow transition active:scale-95 disabled:opacity-60"
+                >
+                  <TrashIcon />
+                  លុបទាំងអស់ដែលបានជ្រើស ({kn(selected.size)})
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
       {openIndex >= 0 && (
         <Lightbox
           items={visible}
@@ -295,7 +348,10 @@ export function AdminDashboard() {
           actions={(item) => (
             <button
               type="button"
-              onClick={() => deleteItems([item.id])}
+              onClick={() => {
+                setOpenId(null);
+                deleteItems([item.id]);
+              }}
               className="rounded-full px-3 py-1.5 text-xs tracking-wide text-[#f1b3a6] ring-1 ring-[#f1b3a6]/50 transition hover:bg-white/10"
             >
               លុប

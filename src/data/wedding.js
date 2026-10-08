@@ -5,7 +5,7 @@
 
 export const wedding = {
   // Public URL of the deployed site (used for share links + og:image).
-  siteUrl: 'https://sereybothhydev-max.github.io/chanheng-mengly',
+  siteUrl: 'https://chanheng-mengly.vercel.app',
 
   groom: {
     kh: 'សុខ ច័ន្ទហេង',

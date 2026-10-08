@@ -3,7 +3,7 @@
 /**
  * The guest upload card.
  *
- * Flow:  idle → review (pick files, add name/message) → uploading → done
+ * Flow:  idle → review (pick files, add an optional message) → uploading → done
  *
  * Upload pipeline for each batch:
  *   1. Make small preview thumbnails in the browser (fast gallery loading)
@@ -29,7 +29,6 @@ type Selected = {
 
 type Phase = "idle" | "review" | "uploading" | "done";
 
-const NAME_STORAGE_KEY = "wedding-guest-name";
 let keyCounter = 0;
 
 export function UploadPanel({ onUploaded }: { onUploaded: (items: MediaItem[]) => void }) {
@@ -45,21 +44,10 @@ export function UploadPanel({ onUploaded }: { onUploaded: (items: MediaItem[]) =
   const [phase, setPhase] = useState<Phase>("idle");
   const [selected, setSelected] = useState<Selected[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
-  const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [progress, setProgress] = useState(0); // 0 → 1
   const [statusText, setStatusText] = useState("");
   const [sharedCount, setSharedCount] = useState(0);
-
-  // Remember the guest's name for their next upload.
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(NAME_STORAGE_KEY);
-      if (saved) setName(saved);
-    } catch {
-      /* private browsing — ignore */
-    }
-  }, []);
 
   // Free preview memory when the component goes away.
   const selectedRef = useRef(selected);
@@ -156,11 +144,6 @@ export function UploadPanel({ onUploaded }: { onUploaded: (items: MediaItem[]) =
     setPhase("uploading");
     setErrors([]);
     setProgress(0);
-    try {
-      localStorage.setItem(NAME_STORAGE_KEY, name.trim());
-    } catch {
-      /* ignore */
-    }
     const wakeLock = await requestWakeLock();
     const problems: string[] = [];
     const failed = new Set<string>();
@@ -244,7 +227,7 @@ export function UploadPanel({ onUploaded }: { onUploaded: (items: MediaItem[]) =
         const res = await fetch("/api/upload/complete", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ items: succeeded, guestName: name, message }),
+          body: JSON.stringify({ items: succeeded, message }),
         });
         const json = (await res.json().catch(() => ({}))) as { items?: MediaItem[]; error?: string };
         if (!res.ok) throw new Error(json.error ?? "មិនអាចបន្ថែមឯកសាររបស់អ្នកទៅវិចិត្រសាលបានទេ។");
@@ -386,19 +369,8 @@ export function UploadPanel({ onUploaded }: { onUploaded: (items: MediaItem[]) =
             )}
           </ul>
 
-          {/* Optional guest name + message */}
+          {/* Optional message for the couple */}
           <div className="mt-5 space-y-3">
-            <label className="block">
-              <span className="eyebrow">ឈ្មោះរបស់អ្នក · មិនបង្ខំ</span>
-              <input
-                className="field mt-1.5"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                maxLength={UPLOAD_LIMITS.maxNameLength}
-                placeholder="ឧ. មីងស្រី"
-                autoComplete="name"
-              />
-            </label>
             <label className="block">
               <span className="eyebrow">សារជូនគូស្វាមីភរិយា · មិនបង្ខំ</span>
               <textarea

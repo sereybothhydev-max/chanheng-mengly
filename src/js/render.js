@@ -195,7 +195,7 @@ export function render() {
               <span class="pr-icon slide-in-left">${icon(p.icon)}</span>
               <span class="pr-node pop-in" aria-hidden="true"><svg viewBox="0 0 20 20"><path class="kb-fill" d="M10 1.5l2.6 5.9 5.9 2.6-5.9 2.6L10 18.5l-2.6-5.9L1.5 10l5.9-2.6z"/><circle cx="10" cy="10" r="1.8" fill="#f2ecda"/></svg></span>
               <div class="pr-text slide-in-right">
-                <span class="pr-time" data-kh="ម៉ោង ${toKhDigits(p.time)} ${p.periodKh}" data-en="${clockEn} ${ampm}">${getLang() === 'en' ? p.timeEn : `ម៉ោង ${toKhDigits(p.time)} ${p.periodKh}`}</span>
+                <span class="pr-time" data-kh="ម៉ោង ${toKhDigits(p.time)} នាទី ${p.periodKh}" data-en="${clockEn} ${ampm}">${getLang() === 'en' ? p.timeEn : `ម៉ោង ${toKhDigits(p.time)} នាទី ${p.periodKh}`}</span>
                 ${bi(p, 'span', 'pr-name', true)}
               </div>
             </div>`;

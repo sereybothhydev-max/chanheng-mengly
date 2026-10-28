@@ -134,7 +134,7 @@ export function render() {
     <section class="s-invite paper" id="invite">
       ${sectionHead('invHeading')}
       <div class="inv-grid">
-        <figure class="arch" data-arch>${img('04-raised', { sizes: '(min-width: 900px) 380px, 70vw', alt: '' })}</figure>
+        <figure class="arch" data-arch>${img('12-naga-boat', { sizes: '(min-width: 900px) 380px, 70vw', alt: '' })}</figure>
         <div class="inv-text">
           <p class="inv-body" data-reveal="lines" data-i18n="invBody">${t('invBody')}</p>
           <div class="parents-grid">

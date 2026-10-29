@@ -378,7 +378,7 @@ export function UploadPanel({ onUploaded }: { onUploaded: (items: MediaItem[]) =
           {/* Optional message for the couple */}
           <div className="mt-5 space-y-3">
             <label className="block">
-              <span className="eyebrow">សារជូនគូស្វាមីភរិយា · មិនបង្ខំ</span>
+              <span className="eyebrow">សារជូនគូស្វាមីភរិយា</span>
               <textarea
                 className="field mt-1.5 min-h-[84px] resize-none"
                 value={message}

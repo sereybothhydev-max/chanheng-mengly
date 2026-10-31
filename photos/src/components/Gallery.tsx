@@ -13,6 +13,7 @@ import { kn } from "@/lib/khmer";
 import { forgetMyUploads, readMyUploads, type MyUploads } from "@/lib/my-uploads";
 import { publicUrl } from "@/lib/supabase-browser";
 import type { MediaItem } from "@/lib/types";
+import { CartoonGrid } from "./CartoonGrid";
 import { Lightbox } from "./Lightbox";
 import { Ornament } from "./Ornament";
 import { PlayBadge } from "./UploadPanel";
@@ -190,9 +191,12 @@ export function Gallery({ items, status, hasMore, loadingMore, onLoadMore, onDel
       )}
 
       {status === "ready" && items.length === 0 && (
-        <p className="shadow-text mx-auto max-w-xs text-center font-display text-lg text-ivory/85">
-          មិនទាន់មានរូបថតនៅឡើយទេ — សូមក្លាយជាអ្នកដំបូងដែលចែករំលែកអនុស្សាវរីយ៍ ♡
-        </p>
+        <>
+          <p className="shadow-text mx-auto mb-5 max-w-xs text-center font-display text-lg text-ivory/85">
+            មិនទាន់មានរូបថតនៅឡើយទេ — សូមក្លាយជាអ្នកដំបូងដែលចែករំលែកអនុស្សាវរីយ៍ ♡
+          </p>
+          <CartoonGrid />
+        </>
       )}
 
       {items.length > 0 && (

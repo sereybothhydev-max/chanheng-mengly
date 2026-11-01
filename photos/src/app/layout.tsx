@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   description: "ម៉េងលី & ច័ន្ទហេង · ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦",
   // Keep the wedding out of Google search results.
   robots: { index: false, follow: false },
-  // Link preview in Telegram / Messenger / Facebook (public/og.jpg, 1200×630).
+  // Link preview in Telegram / Messenger / Facebook (public/og-couple.jpg, 1200×630).
   metadataBase: new URL("https://mengly-chanheng-photos.vercel.app"),
   openGraph: {
     type: "website",
@@ -42,9 +42,9 @@ export const metadata: Metadata = {
     locale: "km_KH",
     title: "ចែករំលែករូបភាពនៅទីនេះ",
     description: "ម៉េងលី & ច័ន្ទហេង · ថ្ងៃអាទិត្យ ទី២០ ខែធ្នូ ឆ្នាំ២០២៦",
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "ម៉េងលី & ច័ន្ទហេង" }],
+    images: [{ url: "/og-couple.jpg", width: 1200, height: 630, alt: "ម៉េងលី & ច័ន្ទហេង" }],
   },
-  twitter: { card: "summary_large_image", images: ["/og.jpg"] },
+  twitter: { card: "summary_large_image", images: ["/og-couple.jpg"] },
 };
 
 export const viewport: Viewport = {
